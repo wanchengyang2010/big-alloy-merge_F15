@@ -1,0 +1,96 @@
+---
+title: "Replace Element Ball Images in Big Alloy Merge Game"
+sidebarTitle: "Ball Images"
+description: "Swap out any ball image in Big Alloy Merge by replacing PNG files in assets/images/. Files must be 1024×1024 RGBA PNG with a transparent background."
+---
+
+Every ball in Big Alloy Merge is rendered from a numbered PNG file stored in the `assets/images/` folder. You can swap any of these files to change how an element looks in-game — swap in a photo, custom illustration, or any artwork you like. The game reads the files fresh each time a round starts, so your replacement appears as soon as you restart.
+
+## Image File Locations
+
+The exact path depends on how you installed the game:
+
+| Installation type | Path |
+|-------------------|------|
+| **Windows NSIS installer** | `[install dir]\_internal\assets\images\` (typically `C:\Program Files\Big Alloy Merge\_internal\assets\images\`) |
+| **Windows standalone EXE** | Same folder as the EXE: `_internal\assets\images\` |
+| **Python source** | `assets/images/` relative to the repository root |
+| **Linux AppImage / .deb** | `_internal/assets/images/` inside the AppImage or `/usr/share/big-alloy-merge/assets/images/` for the .deb |
+
+## File Naming Convention
+
+Each file is named by its **tier number**:
+
+| File | Tier | Mode availability |
+|------|------|-------------------|
+| `0.png` | Tier 0 (smallest drop) | Full mode only |
+| `1.png` | Tier 1 | Full mode only |
+| `2.png` | Tier 2 | Full mode only |
+| `3.png` | Tier 3 | Full mode only |
+| `4.png` | Tier 4 | Full mode only |
+| `5.png` | Tier 5 | Full + Lite (tier 0 in Lite) |
+| `6.png` | Tier 6 | Full + Lite |
+| `7.png` | Tier 7 | Full + Lite |
+| `8.png` | Tier 8 | Full + Lite |
+| `9.png` | Tier 9 | Full + Lite |
+| `10.png` | Tier 10 | Full + Lite |
+| `11.png` | Tier 11 | Full + Lite |
+| `12.png` | Tier 12 | Full + Lite |
+| `13.png` | Tier 13 | Full + Lite |
+| `14.png` | Tier 14 | Full + Lite |
+| `15.png` | Tier 15 | Full + Lite |
+| `16.png` | Tier 16 (ultimate) | Full + Lite |
+
+Lite mode uses files `5.png` through `16.png` (its 12-element chain maps to tiers 5–16 internally). Full mode uses all 17 files, `0.png` through `16.png`.
+
+## Image Requirements
+
+<Note>
+  Replacement images must meet these requirements exactly for the game to render them correctly:
+
+  - **Size:** exactly 1024 × 1024 pixels
+  - **Format:** PNG
+  - **Color mode:** RGBA (32-bit with alpha channel)
+  - **Background:** transparent — areas outside the ball subject should have `alpha = 0`
+  - **Subject placement:** roughly centered in the canvas for the best appearance at all ball sizes
+</Note>
+
+If you supply a non-compliant image, the game may display it stretched, clipped, or with incorrect transparency. Use `image_processor.py` (see below) to normalize any source image automatically.
+
+## Converting Images with image_processor.py
+
+The included `image_processor.py` script accepts any readable image file and outputs a compliant 1024×1024 RGBA PNG. It scales the source to fit the longer edge, center-crops to a square, and preserves existing transparency.
+
+```bash
+python image_processor.py input.jpg assets/images/5.png
+```
+
+Replace `input.jpg` with your source file path and `assets/images/5.png` with the target tier file you want to overwrite. The script uses pure pygame-ce — no additional dependencies required beyond what the game already needs.
+
+**What the processor does:**
+
+1. Loads the source image (any pygame-ce–supported format)
+2. Converts to RGBA
+3. Scales so the longer dimension equals 1024 px, preserving aspect ratio
+4. Center-crops to a 1024×1024 square (padding with transparent pixels for portrait/landscape images that don't fill the square after scaling)
+5. Saves the result as a PNG to the output path you specify
+
+<Tip>
+  Always keep a backup copy of the original numbered PNG files before replacing them. Copy the entire `assets/images/` folder somewhere safe — restoring a single file later is much faster than reinstalling the game.
+</Tip>
+
+## Replacing Images in the Installed Version (Windows)
+
+<Warning>
+  The NSIS installer places game files under `Program Files`, which is write-protected by default on Windows. To replace ball images in the installed version, you must navigate to `_internal\assets\images\` inside the install directory and either run your file manager as Administrator or copy files there from an elevated command prompt.
+
+  Typical path: `C:\Program Files\Big Alloy Merge\_internal\assets\images\`
+
+  If you prefer to avoid Administrator permissions, run the game directly from the Python source instead — the `assets/images/` folder there has no access restrictions.
+</Warning>
+
+## Applying Your Changes
+
+Image changes take effect the next time you **launch the game** or **restart a round** (press **R** or click the restart button). The game does not hot-reload images during an active session — you need to start a new round for the new artwork to appear.
+
+If a replacement file is missing or unreadable when a round starts, the game falls back to rendering the ball in its default solid color for that tier.

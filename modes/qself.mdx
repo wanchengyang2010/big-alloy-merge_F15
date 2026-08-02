@@ -1,0 +1,56 @@
+---
+title: "Q Self Mode: Play with Your Own Custom Ball Images"
+sidebarTitle: "Q Self"
+description: "Q Self mode lets you replace every ball image and name with your own photos and text, loaded from q_custom.json. A personal take on Big Alloy Merge."
+---
+
+Q Self mode transforms Big Alloy Merge into a completely personalized experience. Instead of the default element artwork, every ball displays an image of your choosing — a friend's photo, a pet, a meme, anything you like. Names and merge messages are yours to write too. All of it loads from a single file, `q_custom.json`, and your scores count toward your history just like Lite mode.
+
+## How to Start
+
+Press **`Q`** on the mode select screen to launch Q Self mode. If `q_custom.json` isn't present yet, the game loads the default Lite mode assets as a fallback — you won't see your custom content until the file exists and is correctly formatted.
+
+## What You Can Customize
+
+Q Self mode reads three things from `q_custom.json` for each of the 12 ball tiers:
+
+| Field | What It Changes |
+|-------|----------------|
+| `image` | The PNG filename for this ball's artwork (e.g. `"my_photo.png"`) |
+| `name` | The display name shown in the drop preview and merge announcements |
+| `message` | The text that pops up when two of these balls merge |
+
+Everything else — physics, container size, drop sequence, scoring — is identical to Lite mode.
+
+## Preparing Your Images
+
+Your source images don't need to be square or a specific size. The included **`image_processor.py`** tool automatically normalizes any image file to the required **1024×1024 RGBA PNG** format:
+
+- Crops and resizes to fit the square canvas
+- Converts the background to transparent where applicable
+- Outputs a clean PNG ready for the game to load
+
+<Tip>
+  You can use any photo — a JPEG from your camera, a screenshot, even a non-square crop. Run it through `image_processor.py` and the tool handles all the resizing and format conversion for you.
+</Tip>
+
+## Game Configuration
+
+Q Self mode shares the Lite mode foundation in every respect except the ball artwork and text:
+
+| Parameter | Value |
+|-----------|-------|
+| Elements | 12 (tiers 0–11) |
+| Container width | 480 ref |
+| Overflow line | 135 ref |
+| Physics model | JFT2 (1800 px/s² gravity, rigid walls, 480 FPS) |
+| Dynamic drop | ❌ Disabled |
+| Score recorded | ✅ Saved to history |
+
+## Full Setup Guide
+
+Setting up `q_custom.json` with your own images, names, and messages is covered step by step in the customization guide:
+
+<Card title="Q Self Setup Guide" icon="palette" href="/customization/qself-setup">
+  Learn how to create and format `q_custom.json`, prepare your images with `image_processor.py`, and load your custom content into Q Self mode.
+</Card>

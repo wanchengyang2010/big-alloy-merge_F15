@@ -1,47 +1,81 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "Get Started with Big Alloy Merge in Minutes"
+sidebarTitle: "Quickstart"
+description: "Launch Big Alloy Merge, choose your first game mode, drop your first ball, and discover the core merge loop — all in under five minutes."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
+This guide walks you through everything you need to know to play your first complete game of Big Alloy Merge. You will launch the game, select a beginner-friendly mode, drop your first ball, and learn how the merge chain works — all in about five minutes. If you have not yet installed the game, start with the [Installation guide](/installation) first.
 
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+<Tip>
+  **New to merge games?** Start with Lite mode. It uses 12 elements instead of 17, has a narrower drop window, and is tuned to give you a satisfying learning curve before you tackle the full chain.
+</Tip>
 
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+## Your First Game
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
-
-    ```bash
-    npm install your-package
-    ```
+  <Step title="Launch Big Alloy Merge">
+    Open the game from your desktop shortcut or by running `python main.py` from the project directory. The splash screen appears while assets load. Click anywhere on the splash screen — or press any key — to proceed to the mode selection screen.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+  <Step title="Select Lite Mode">
+    On the mode selection screen you will see cards for each available mode. Press **B** on your keyboard, or click the **Lite Mode** card, to start a Lite mode session. Lite mode uses 12 elements and is the recommended starting point for new players.
 
-    ```bash
-    your-cli init
-    ```
+    The game container appears with a preview ball hovering above it, ready to drop.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+  <Step title="Drop Your First Ball">
+    Move your mouse inside the container. The preview ball follows your cursor, showing you exactly where it will land. When you are happy with the position, **release the mouse button** to drop the ball. It will fall under gravity, bounce off the walls, and settle in the container.
 
-    ```bash
-    your-cli start
-    ```
+    Drag left and right before releasing to fine-tune your aim. The drop locks in only when you lift your finger.
+  </Step>
+  <Step title="Watch the Merges">
+    Keep dropping balls. When two balls of the same tier touch, they automatically fuse into the next tier — a merge sound plays, a golden message floats up, and the new ball may immediately collide with another same-tier ball, triggering a chain reaction. Chains can cascade several levels deep and are worth chasing.
+
+    <Warning>
+      Watch the **red dashed overflow line** near the top of the container. If your ball stack rises above this line and stays there for three seconds without settling, the game ends. Always think about where large balls will land before you drop them.
+    </Warning>
+  </Step>
+  <Step title="Aim for 钇钾">
+    Your ultimate goal is to fuse all the way up to **钇钾 🪙** — the 12th and final tier in Lite mode (16th in Full mode). When you achieve it, the screen fills with a celebration effect and the victory music plays. If the stack overflows before you get there, click anywhere inside the container to restart immediately.
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+## Keyboard Reference
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+These shortcuts work during gameplay and on the mode selection screen.
+
+| Key | Action |
+|---|---|
+| **B** | Enter Lite mode (12 elements, beginner-friendly) |
+| **A** | Enter Full mode (17-element chain, dynamic drops) |
+| **D** | Enter Demo mode (AI plays automatically) |
+| **Q** | Enter Q Self mode (custom element names and images) |
+| **R** | Restart the current game immediately |
+| **F11** | Toggle fullscreen / windowed mode |
+| **ESC** | Return to mode selection or exit the game |
+
+## Understanding the Merge Chain
+
+Every element in the game lives at a specific tier. Dropping two balls of the same tier in the same area causes a fusion: the pair disappears and a single ball one tier higher appears at the midpoint. That new ball inherits the combined momentum and may immediately touch another ball of its tier, creating a chain.
+
+In Lite mode the chain runs from **tier 0** (灰鼠 🐁, the smallest droppable ball) up to **tier 11** (钇钾 🪙, the ultimate goal). The six lowest tiers — 0 through 5 — can appear as drops. Tiers 6 and above are only obtainable by merging.
+
+<Note>
+  In Full mode the chain extends to **17 tiers** (0–16), and the **dynamic drop system** gradually unlocks higher-tier drops as you progress: fusing a tier-N element unlocks tier N−2 as a possible drop, giving you more variety in the late game but also larger balls to manage.
+</Note>
+
+## Button Bar Reference
+
+The toolbar along the top of the game window gives you quick access to common actions.
+
+| Button | Action |
+|---|---|
+| 🔄 Restart | Restart the current game |
+| 🔲 Maximise | Maximise the window without covering the taskbar |
+| ⬜ Fullscreen | Toggle true fullscreen |
+| ━ Minimise | Minimise the window |
+| 🏠 Menu | Return to the mode selection screen |
+| 🔊 / 🔇 | Toggle sound on or off |
+| ❌ Quit | Exit the game |
+
+## Next Steps
+
+Once you are comfortable with Lite mode, try **Full mode** (press **A**) to take on the complete 17-element chain. If you want to experiment with physics parameters, enter **Full Debug** mode from the mode selection screen using password `3919`, then press **F3** to open the real-time parameter panel.

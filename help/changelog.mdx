@@ -1,0 +1,107 @@
+---
+title: "Big Alloy Merge Version History and Changelog"
+sidebarTitle: "Changelog"
+description: "Release notes for every version of Big Alloy Merge — from the initial v0.4.0.0 prototype to the current v2.3.0.0 长风破浪版 release."
+---
+
+Big Alloy Merge has grown from a core gameplay prototype into a full-featured physics merge game with 17 elements, a 480 FPS engine, multiple game modes, and a Windows installer — all across a development sprint in June 2026. This page records what changed in each release, from the very first build to the current version.
+
+<AccordionGroup>
+  <Accordion title="v2.3.0.0 (2026-06-22) — 长风破浪版 · Current Release">
+    **Element rework · Dynamic drop system · 480 FPS · NSIS installer · AppData migration**
+
+    **Element changes (Full mode):**
+    - 西西 🕴️ replaces 嘟嘟 ☢️ as tier 0, with a new image and merge message "xiiiiii"
+    - 春宇 ♾️ inserted at tier 14 (between 马恕 and 锐哥), with new image and merge message "闭嘴吧啊"
+    - 雪豹 removed from the tier list; 恐龙 moves to tier 12, 狒狒 moves to tier 13
+
+    **Dynamic drop system (Full mode only):**
+    - Merging a tier N ball unlocks dropping tier N-2 balls
+    - Tier N-3 drops are rate-limited to 1 per 5 balls; tier N-2 drops to 1 per 8 balls
+    - Drop tier and name are displayed above the preview ball
+
+    **Physics and performance:**
+    - FPS doubled from 120 to **480**; vsync enabled on all windows to prevent tearing
+    - Angular damping reduced: 0.98 → **0.92** (balls spin down faster)
+    - Collision torque multiplier reduced: 2.0 → **1.0**
+    - Wall torque coupling reduced: 0.03 → **0.015**
+
+    **Platform and distribution:**
+    - NSIS installer includes all assets, Python source, and optional debug password pre-authorization
+    - Save data migrated from the installation directory to `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\` — no administrator rights required
+
+    **Bug fix:** resolved an `AttributeError` crash caused by `_dynamic_drop` being accessed before initialization.
+  </Accordion>
+
+  <Accordion title="v2.2.x (2026-06-16 to 2026-06-18)">
+    **v2.2.2.5 (2026-06-18) — Critical bug fix release**
+    - Fixed a `_check_merges` infinite loop that caused the game to freeze immediately on launch (a misplaced `break` in the while loop)
+    - Instant merge fully enabled: `circles_near()` with 3 px tolerance correctly integrated into `_check_merges`
+    - GitHub update notification now runs in a background thread with thread-safe rendering
+    - Added `A` key shortcut to enter Full mode
+    - `COLLISION_PASSES` reduced from 10 to 4 (60% fewer collision iterations per frame)
+
+    **v2.2.2.4 (2026-06-16) — Deprecated (contained the merge freeze bug)**
+    - Wall friction reworked: proportional damping based on normal force, no hard velocity stop
+    - Instant merge system introduced (`circles_near()` function)
+    - Full mode container width adjusted: 550 → 540
+    - GitHub Releases update check added (background HTTP thread)
+
+    **v2.2.2.3 (2026-06-16)**
+    - NSIS installer with MUI2 modern wizard UI
+    - Wall friction completely rewritten — balls no longer stick to walls
+    - Angular damping and wall friction coefficients tuned for natural movement
+  </Accordion>
+
+  <Accordion title="v2.1.x — v2.0.x (2026-06-12 to 2026-06-13)">
+    **v2.1.0.0 (2026-06-13)**
+    - Back-to-menu button (🏠) added to the in-game button bar; pressing it saves progress and returns to the mode select screen
+    - Per-mode independent saves: each mode stores its own `savegame_{mode_id}.json`
+
+    **v2.0.4.0 (2026-06-13)**
+    - Full mode (17 elements) unlocked
+    - Full Debug mode introduced with a real-time parameter panel (`debug_panel.py`)
+    - Panel has three tabs: Math Model, Physics Engine, and Art Framework — all parameters adjustable live
+
+    **v2.0.1.0 (2026-06-12)**
+    - Rotation physics major rework: angular velocity decay is now frame-rate independent (`ω *= damping ** dt`)
+    - Wall rotational friction added; linear-to-torque coupling significantly reduced
+    - New icon and background art
+
+    **v2.0.0.0 (2026-06-12)**
+    - Full mode customization system introduced
+    - Three theoretical frameworks formalized: **LambertLiuTheory** (math/container model), **JaneFlyThought** (physics engine), **BurningIsm** (art/audio)
+    - `modes.json` persistence for all mode parameters
+    - Per-ball independent physics parameters (mass, friction, elasticity)
+  </Accordion>
+
+  <Accordion title="v1.x (2026-06)">
+    **v1.1.0.2**
+    - Collision tunneling and overlap jitter fixed; sleep mechanism introduced
+    - Mass formula changed from `r²` to `r × 10` for better small/large ball balance
+    - `COLLISION_PASSES` increased from 5 to 10
+
+    **v1.1.0.1**
+    - JaneFlyThought2 physics engine: gravity 1800 px/s², initial drop velocity 1600 px/s, rigid collisions
+    - Q Self mode added: custom ball images, names, and merge messages loaded from `q_custom.json`
+    - Full-screen victory effect when 钇钾 is created
+    - Auto-save on exit; restore card shown on mode select screen
+
+    **v1.0.x**
+    - Launch splash screen and EXE metadata added
+    - Adaptive window sizing for small screens
+    - GitHub Release published
+
+    **v0.5.0.0**
+    - Mode select screen introduced
+    - 11-element mode with merge messages
+    - Standalone EXE distribution
+
+    **v0.4.0.0**
+    - Core gameplay complete: drop, physics, merge, overflow detection, score tracking
+  </Accordion>
+</AccordionGroup>
+
+---
+
+*Dedicated to the Junior High Class of 2026, F15. — Trash Panda Q Opal*

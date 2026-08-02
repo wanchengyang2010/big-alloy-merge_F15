@@ -1,0 +1,99 @@
+---
+title: "Troubleshooting Big Alloy Merge: Crashes, Audio, and Display"
+sidebarTitle: "Troubleshooting"
+description: "Fix common issues in Big Alloy Merge — game crashes on launch, missing sounds, oversized or undersized windows, missing fonts on Linux, and corrupted saves."
+---
+
+Most issues with Big Alloy Merge fall into a small set of categories: launch crashes caused by missing assets or a corrupted save file, audio problems from a muted setting or system configuration, and display quirks that a single keypress can resolve. Work through the relevant section below to get back to playing.
+
+<AccordionGroup>
+  <Accordion title="Game crashes immediately on launch">
+    This is most commonly caused by missing asset files or a corrupted save file.
+
+    **For the portable (standalone EXE) version:**
+    - Make sure the `_internal/assets/` folder is in the **same directory** as `Big_Alloy_Merge.exe`. If you moved only the EXE, the game cannot find its resources and will crash on startup.
+
+    **Corrupted save file:**
+    - Open `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\` and delete `savegame.json`, then launch the game again. A corrupted save file is one of the most common causes of immediate crashes.
+
+    **For the NSIS installer version:**
+    - The installer manages all assets automatically. If the installed version is crashing, try re-running `Big_Alloy_Merge_Setup.exe` to repair the installation.
+  </Accordion>
+
+  <Accordion title="No sound at all">
+    Work through these checks in order:
+
+    1. Look for the **🔇 icon** in the top button bar during gameplay. If it shows the muted symbol, click it to unmute.
+    2. Check your **Windows system volume** — make sure the system isn't muted and the application volume for Big Alloy Merge is not set to zero in the Volume Mixer.
+    3. **On Linux:** verify that your audio daemon is running. Run `pactl info` (PulseAudio) or `pactl list sinks` (PipeWire) in a terminal. If the daemon isn't active, start it with `pulseaudio --start` or `systemctl --user start pipewire`.
+  </Accordion>
+
+  <Accordion title="Window is too small or too large">
+    Big Alloy Merge supports flexible window sizing. Try any of these:
+
+    - Press **F11** to toggle between fullscreen and windowed mode
+    - Click the **🔲 button** in the top button bar to maximize the window without covering the taskbar
+    - Drag the **window edges** to resize the window manually to any dimensions you prefer
+
+    The game scales all UI elements and physics values proportionally as you resize, so every window size is fully playable.
+  </Accordion>
+
+  <Accordion title="Chinese text shows as boxes or question marks (Linux)">
+    Big Alloy Merge uses Chinese characters throughout its interface. On Linux, these require CJK fonts to render correctly, and emoji characters require a color emoji font.
+
+    Install the necessary fonts with:
+
+    ```bash
+    # CJK characters (pick one):
+    sudo apt install fonts-noto-cjk
+    # or
+    sudo apt install fonts-wqy-zenhei
+
+    # Emoji support:
+    sudo apt install fonts-noto-color-emoji
+    ```
+
+    After installing, **restart the game**. The font changes take effect immediately on the next launch — no system restart is needed.
+  </Accordion>
+
+  <Accordion title="Game freezes after opening">
+    If the game launches but then freezes immediately (the window appears but nothing moves), this almost always indicates a **corrupted save file**.
+
+    To fix it:
+    1. Press **Win+R**, type `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge`, and press Enter
+    2. Delete `savegame.json`
+    3. Relaunch the game
+
+    The game will start fresh without a saved session. Your high scores and custom modes (stored in `highscore.txt` and `modes.json`) are unaffected.
+  </Accordion>
+
+  <Accordion title="High scores not showing correctly">
+    Scores are only recorded in **Lite mode**, **Full mode**, and **Q Self mode**. If you played in Debug, Full Debug, or Demo mode, those scores are intentionally excluded.
+
+    If `highscore.txt` appears corrupted or the high score display shows unexpected values, you can safely delete the file. Big Alloy Merge recreates `highscore.txt` automatically on the next launch and starts tracking scores from that point forward.
+  </Accordion>
+
+  <Accordion title="Can't find the AppData folder">
+    Windows hides the AppData folder by default. The easiest way to open it is:
+
+    1. Press **Win+R** to open the Run dialog
+    2. Type `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge` and press **Enter**
+
+    Windows Explorer will open directly at the Big Alloy Merge data folder, where you'll find `savegame.json`, `highscore.txt`, and `modes.json`.
+  </Accordion>
+
+  <Accordion title="Python version error when running from source">
+    Big Alloy Merge has different Python version requirements depending on your platform:
+
+    - **Windows:** Python **3.14 or later** is required
+    - **Linux / macOS:** Python **3.10 or later** is sufficient
+
+    The game also requires **pygame-ce** (the Community Edition), not the original `pygame` package. Make sure you install the correct one:
+
+    ```bash
+    pip install pygame-ce
+    ```
+
+    If you previously installed `pygame`, uninstall it first (`pip uninstall pygame`) to avoid conflicts, then install `pygame-ce`.
+  </Accordion>
+</AccordionGroup>

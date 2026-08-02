@@ -1,0 +1,54 @@
+---
+title: "Dynamic Drop System: Unlock New Ball Types as You Merge"
+sidebarTitle: "Dynamic Drop"
+description: "In Full mode, the dynamic drop system unlocks higher-tier balls for dropping as you reach merge milestones — strategic depth increases the further you progress."
+---
+
+The dynamic drop system, introduced in v2.3.0.0, transforms Full mode from a static puzzle into an escalating challenge. Rather than always drawing from the same fixed pool of droppable balls, the game tracks your highest-ever merge and gradually unlocks larger balls for you to drop. The further you climb the 17-element fusion chain, the more powerful — and harder to place — the balls that appear at the top of the container.
+
+## What Dynamic Drop Does
+
+As you fuse higher-tier balls, the game unlocks new tiers for your drop queue. Specifically, achieving a merge at tier N causes tier N-2 to become eligible to appear in future drops. This offset ensures you always have a meaningful gap between what you can create by merging and what you might receive from the sky — you earn the big balls, but you still have to earn your way to the *biggest* ones.
+
+**Example progressions:**
+
+- You merge two balls to create a **tier 8** ball → **tier 6** balls can now appear in your drop queue.
+- Later, you merge to create a **tier 10** ball → **tiers 7 and 8** also become eligible (since tier 10 − 2 = 8, and tier 9 − 2 = 7 was unlocked when you reached tier 9).
+
+## Unlock Formula
+
+```
+Merge tier N  →  unlock drop tier N - DYNAMIC_DROP_UNLOCK_OFFSET
+```
+
+With the default offset of 2, every two rungs you climb on the fusion ladder open one new rung in the drop pool. The unlock is permanent for the current session — once a tier is unlocked, it stays in the eligible pool even if you never merge that high again.
+
+## Rate Limiting
+
+Unlocking a tier does not mean it floods your queue. The engine applies per-tier rate limits to keep the board from being overwhelmed by oversized balls early in a game.
+
+| Unlocked Tier | Rate Limit |
+|:---:|---|
+| N − 3 | Maximum 1 occurrence per 5 drops |
+| N − 2 | Maximum 1 occurrence per 8 drops |
+
+The N-2 tier (the most recently unlocked) is more strictly gated than the N-3 tier (one step older). This means the very largest balls you can currently drop appear only rarely, while slightly smaller unlocked balls show up a bit more often.
+
+## Configuration
+
+All dynamic drop behavior is controlled by four constants in `constants.py`. You can inspect and modify these live in **Full Debug mode**.
+
+| Constant | Default | Description |
+|---|---|---|
+| `DYNAMIC_DROP_ENABLED` | `True` | Enable or disable the entire dynamic drop system |
+| `DYNAMIC_DROP_UNLOCK_OFFSET` | `2` | How many tiers below the current merge milestone are unlocked for dropping |
+| `DYNAMIC_DROP_RATE_LIMIT` | `5` | Rate limit (drops between appearances) for the N-3 tier |
+| `DYNAMIC_DROP_RATE_LIMIT_TIGHT` | `8` | Rate limit (drops between appearances) for the N-2 tier |
+
+<Note>
+  Dynamic drop is active **only in Full mode and Full Debug mode**. Lite, Debug, Demo, and Q Self modes use fixed drop pools and are unaffected by this system.
+</Note>
+
+<Tip>
+  Open Full Debug mode (password `3919`) and press `F3` to adjust `DYNAMIC_DROP_RATE_LIMIT` and `DYNAMIC_DROP_RATE_LIMIT_TIGHT` in real time. Try setting both to 1 for a chaotic experience where the largest unlocked balls appear in almost every drop.
+</Tip>

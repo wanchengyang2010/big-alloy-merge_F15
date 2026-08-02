@@ -1,0 +1,72 @@
+---
+title: "Frequently Asked Questions: Big Alloy Merge"
+sidebarTitle: "FAQ"
+description: "Answers to the most common questions about Big Alloy Merge — game rules, controls, debug mode, custom images, save data, and how to reach 钇钾."
+---
+
+Whether you're just getting started or trying to push for your first 钇钾, these answers cover the questions players ask most often. If your question isn't here, check the [Troubleshooting](/help/troubleshooting) page or open an issue on GitHub.
+
+<AccordionGroup>
+  <Accordion title="How do I win the game?">
+    Merge two **锐哥** balls (tier 15 in Full mode, tier 10 in Lite mode) to create **钇钾 🪙**. Achieving this triggers a full-screen victory effect and plays L'Internationale. The game continues running after the victory sequence — you can keep playing if you like.
+  </Accordion>
+
+  <Accordion title="What is the red dashed line?">
+    The red dashed line is the **overflow line** (also called the game-over line). If any ball rests above this line and remains stationary for **3 seconds**, the game ends. Balls that are still moving or bouncing do not trigger a game over, even if they're above the line.
+  </Accordion>
+
+  <Accordion title="What is the debug password?">
+    The debug password is **3919**. Enter it on the mode select screen to unlock Debug mode and Full Debug mode. Debug and Full Debug sessions are marked as `debug_tainted`, and scores from those sessions are not recorded in the high score file.
+  </Accordion>
+
+  <Accordion title="How do I save my game?">
+    The game saves **automatically** — you don't need to do anything. Your progress is saved whenever you exit the game or return to the mode select screen via the 🏠 button. To restore a save, look for the **📂 Restore Save** card on the mode select screen and click it, or press **R**.
+  </Accordion>
+
+  <Accordion title="Where is my save data stored?">
+    On Windows (v2.3.0.0 and later), all save data is stored at:
+
+    ```
+    %APPDATA%\Trash Panda Q Opal\Big Alloy Merge\
+    ```
+
+    This folder contains three files: `savegame.json` (current game state), `highscore.txt` (up to 20 score entries), and `modes.json` (custom mode definitions).
+  </Accordion>
+
+  <Accordion title="How do I change a ball's image?">
+    Replace the corresponding PNG in `assets/images/` — ball images are numbered `0.png` through `16.png`, matching their tier number. All images must be **1024×1024 pixels, RGBA PNG format** with a transparent background. For easier customization, use **Q Self mode** — it handles the image conversion automatically via the built-in image processor.
+  </Accordion>
+
+  <Accordion title="Can I create my own game mode?">
+    Yes. Open **Settings** (⚙ gear icon on the mode select screen) and click **"+ New Mode"**. Give your mode a name and it will be created as a copy of an existing mode. From there you can customize physics parameters and container dimensions. In Full Debug mode, you can also tweak every physics parameter in real time using the live parameter panel (F3).
+  </Accordion>
+
+  <Accordion title="Why is there no sound?">
+    First, check the **🔇 button** in the top button bar — if it shows a muted icon, click it to unmute. If the button already shows 🔊 and you still hear nothing, verify that your system volume is not muted or set to zero. On Linux, also check that your audio daemon (PulseAudio or PipeWire) is running.
+  </Accordion>
+
+  <Accordion title="How do I make the window larger?">
+    You have three options:
+    - Click the **🔲 button** in the top bar to maximize the window (the taskbar remains visible)
+    - Press **F11** to toggle true fullscreen mode
+    - Drag the window edge to resize it manually to any size you prefer
+  </Accordion>
+
+  <Accordion title="My score isn't being saved — why?">
+    Scores are only recorded in **Lite mode**, **Full mode**, and **Q Self mode**. Scores are not saved in Debug mode, Full Debug mode, or Demo mode. Also check that the session wasn't marked as `debug_tainted` — any use of debug tools in a session disqualifies the score from the high score file.
+  </Accordion>
+
+  <Accordion title="What does 'debug_tainted' mean?">
+    When you use any debug tool during a session — opening the debug panel, adjusting physics parameters, or locking a drop tier — the session is flagged as `debug_tainted`. This flag ensures that scores achieved with modified parameters cannot appear in the high score file. The flag applies for the entire session, even if you close the debug panel before the game ends.
+  </Accordion>
+
+  <Accordion title="How do I back up my progress?">
+    Copy the entire folder at:
+
+    ```
+    %APPDATA%\Trash Panda Q Opal\Big Alloy Merge\
+    ```
+
+    to any safe location (USB drive, cloud storage, another folder). To restore it, replace the same folder with your backup copy. This preserves your saves, high scores, and all custom modes at once.
+  </Accordion>
+</AccordionGroup>

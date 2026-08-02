@@ -1,0 +1,149 @@
+---
+title: "Install Big Alloy Merge on Windows or Linux"
+sidebarTitle: "Installation"
+description: "Download and install Big Alloy Merge on Windows using the NSIS installer or portable EXE, or on Linux via AppImage, .deb package, or Python source."
+---
+
+Big Alloy Merge runs on Windows 10/11 and most modern Linux distributions. You can install it from a pre-built binary — no Python required — or run it directly from source if you prefer. Choose the method below that matches your platform and follow the steps to get playing.
+
+<Note>
+  All installation methods require approximately **200 MB** of free disk space to accommodate the game executable, sprite images, and audio assets.
+</Note>
+
+<Tabs>
+  <Tab title="Windows">
+    Windows users have two options: the NSIS installer (recommended for most players) or the portable standalone EXE for those who prefer not to run a setup wizard.
+
+    ### Option 1 — NSIS Installer (Recommended)
+
+    The installer creates desktop and Start Menu shortcuts, bundles all assets, and stores your save data in your user profile so you never need administrator rights to play.
+
+    <Steps>
+      <Step title="Download the installer">
+        Go to the [GitHub Releases page](https://github.com/wanchengyang2010/big-alloy-merge/releases) and download `Big_Alloy_Merge_Setup.exe` from the latest release.
+      </Step>
+      <Step title="Run the setup wizard">
+        Double-click `Big_Alloy_Merge_Setup.exe`. The NSIS MUI2 wizard will open. Accept the license agreement, choose an installation directory (or keep the default), and click **Install**.
+      </Step>
+      <Step title="Launch the game">
+        After installation completes, double-click the **Big Alloy Merge** shortcut on your desktop, or find it in **Start Menu → Trash Panda Q Opal → Big Alloy Merge**.
+      </Step>
+    </Steps>
+
+    Your save files, high scores, and configuration are written to:
+
+    ```
+    %APPDATA%\Trash Panda Q Opal\Big Alloy Merge\
+    ```
+
+    You can back up or restore this folder at any time without touching the installation directory.
+
+    ### Option 2 — Portable EXE
+
+    If you want to run the game without installing anything, use the standalone portable executable.
+
+    <Steps>
+      <Step title="Download the portable EXE">
+        From the [GitHub Releases page](https://github.com/wanchengyang2010/big-alloy-merge/releases), download `Big_Alloy_Merge.exe` (approximately 157 MB).
+      </Step>
+      <Step title="Place it anywhere">
+        Copy `Big_Alloy_Merge.exe` to any folder — your desktop, a USB drive, or a shared network location. No installation required.
+      </Step>
+      <Step title="Run it">
+        Double-click `Big_Alloy_Merge.exe` to launch the game. User data is still written to `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\` so your saves roam with your Windows profile.
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Linux">
+    Linux users can choose between an AppImage (works on any distribution without installation), a `.deb` package (for Debian and Ubuntu), or running from Python source.
+
+    <Note>
+      For Chinese element names and merge messages to display correctly, install a CJK font such as **fonts-noto-cjk** or **fonts-wqy-zenhei**. For emoji sprites in the UI, install **fonts-noto-color-emoji**. On Ubuntu/Debian: `sudo apt install fonts-noto-cjk fonts-noto-color-emoji`
+    </Note>
+
+    ### Option 1 — AppImage (Recommended)
+
+    An AppImage is a self-contained executable that runs on any Linux distribution without installation or root access.
+
+    <Steps>
+      <Step title="Download the AppImage">
+        From the [GitHub Releases page](https://github.com/wanchengyang2010/big-alloy-merge/releases), download `Big_Alloy_Merge-*.AppImage`.
+      </Step>
+      <Step title="Make it executable">
+        Open a terminal in the download directory and run:
+        ```bash
+        chmod +x Big_Alloy_Merge-*.AppImage
+        ```
+      </Step>
+      <Step title="Run the game">
+        Launch the AppImage directly from the terminal or by double-clicking it in your file manager:
+        ```bash
+        ./Big_Alloy_Merge-*.AppImage
+        ```
+      </Step>
+    </Steps>
+
+    ### Option 2 — Debian / Ubuntu Package (.deb)
+
+    <Steps>
+      <Step title="Download the .deb package">
+        From the [GitHub Releases page](https://github.com/wanchengyang2010/big-alloy-merge/releases), download `big-alloy-merge_*.deb`.
+      </Step>
+      <Step title="Install with dpkg">
+        ```bash
+        sudo dpkg -i big-alloy-merge_*.deb
+        ```
+      </Step>
+      <Step title="Launch from the terminal or application menu">
+        ```bash
+        big-alloy-merge
+        ```
+        Or find **Big Alloy Merge** in your desktop environment's application launcher.
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="Python Source">
+    Running from source gives you the latest code and full access to the project internals. This method works on any platform where Python and pygame-ce are available.
+
+    ### Requirements
+
+    | Requirement | Version |
+    |---|---|
+    | Python (Linux / macOS) | 3.10 or newer |
+    | Python (Windows) | 3.14 or newer |
+    | pygame-ce | 2.5.7 or newer |
+    | Disk space | ~200 MB |
+
+    <Note>
+      On Linux, install CJK and emoji fonts before running to ensure all text renders correctly: `sudo apt install fonts-noto-cjk fonts-noto-color-emoji`
+    </Note>
+
+    <Steps>
+      <Step title="Clone the repository">
+        ```bash
+        git clone https://github.com/wanchengyang2010/big-alloy-merge.git
+        cd big-alloy-merge
+        ```
+      </Step>
+      <Step title="Install pygame-ce">
+        pygame-ce is the only third-party dependency. Install it with pip:
+        ```bash
+        pip install pygame-ce
+        ```
+        If you are using a virtual environment (recommended), activate it first before running this command.
+      </Step>
+      <Step title="Run the game">
+        ```bash
+        python main.py
+        ```
+        The splash screen will appear and the game will load all assets from the `assets/` directory automatically.
+      </Step>
+    </Steps>
+
+    <Tip>
+      If you have both Python 2 and Python 3 installed, use `python3 main.py` and `pip3 install pygame-ce` to ensure you are targeting the correct interpreter.
+    </Tip>
+  </Tab>
+</Tabs>

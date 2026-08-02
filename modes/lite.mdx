@@ -1,0 +1,59 @@
+---
+title: "Lite Mode: Classic 12-Element Merge Experience"
+sidebarTitle: "Lite Mode"
+description: "Lite mode is the default Big Alloy Merge experience — 12 elements, Daxigua-inspired physics, score tracking, and the recommended starting point for all players."
+---
+
+Lite mode is where most players begin their Big Alloy Merge journey. It strips the element chain down to 12 tiers — starting with the tiny 灰鼠 🐁 and culminating in the legendary 钇钾 🪙 — and pairs them with a 480-ref-wide container and the JaneFlyThought2 physics model. Every merge you complete is scored and saved to your history, so you always know your personal best.
+
+<Note>
+  Lite mode is the recommended starting point for all new players. The 12-element chain and familiar container width give you room to learn the merge mechanics without the added pressure of Full mode's dynamic drop system or taller overflow line.
+</Note>
+
+## What Makes Lite Mode Different
+
+- **12-element chain** — tiers 0 through 11 (灰鼠 → 钇钾), giving you a manageable but still challenging fusion ladder.
+- **Container width 480 ref** — narrower than Full mode's 540 ref, keeping the ball stack compact and readable.
+- **No dynamic drop** — the balls you can drop are always drawn from the same fixed pool (tiers 0–5), so there are no surprise high-tier drops mid-game.
+- **JFT2 physics** — 1800 px/s² gravity, rigid walls (zero wall bounce), and 480 FPS simulation for smooth, predictable ball movement.
+- **Score recorded** — every session's score is written to your history and compared against your all-time high.
+
+## Drop Sequence
+
+Lite mode uses a fixed opening sequence to ease you into each game, followed by random drops from the lower tiers:
+
+| Phase | Sequence |
+|-------|----------|
+| Opening (fixed) | 灰鼠 → 灰鼠 → 家畜 → 猴子 → 猴子 → 考拉 |
+| Ongoing (random) | Random draw from tiers 0–5 (灰鼠 through 阳阳) |
+
+The fixed opening guarantees a predictable start, letting you build a stable base before the randomness kicks in.
+
+## Container Specifications
+
+| Parameter | Value |
+|-----------|-------|
+| Container width | 480 ref |
+| Overflow line | 135 ref from the top |
+| Drop delay | 0.25 s between drops |
+| Overflow timeout | 3.0 s (balls must remain above the line for this long to trigger Game Over) |
+
+## How to Start
+
+Press **`B`** on the mode select screen to launch Lite mode instantly. You can also click the **Lite** card if you prefer the mouse.
+
+## Physics Model
+
+Lite mode uses the **JaneFlyThought2 (JFT2)** physics engine, which is the current default for all non-debug modes:
+
+| Parameter | Value |
+|-----------|-------|
+| Gravity | 1800 px/s² |
+| Initial drop velocity | 1600 px/s |
+| Wall elasticity | 0.0 (rigid — balls stop dead on contact) |
+| Ball-to-ball friction | 0.20 |
+| Wall friction | 0.08 |
+| Angular damping | 0.92 per second |
+| Simulation rate | 480 FPS |
+
+The vacuum environment (zero air resistance) means balls accelerate freely until they hit the stack, producing satisfying, high-energy chain reactions.

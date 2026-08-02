@@ -1,0 +1,46 @@
+---
+title: "Big Alloy Merge Game Modes: All Six Explained"
+sidebarTitle: "Overview"
+description: "Compare all six game modes in Big Alloy Merge — Lite, Full, Debug, Full Debug, Demo, and Q Self — and choose the right mode for your playstyle."
+---
+
+Big Alloy Merge ships with six distinct game modes, each tuned for a different kind of experience. Whether you're a first-time player looking for a gentle introduction, a physics tinkerer who wants to adjust every variable in real time, or someone who wants to watch an AI bot chain-react its way through a pile of balls, there's a mode for you. The mode select screen greets you every time you launch the game — press the corresponding key or click the card to jump straight in.
+
+## Mode Comparison
+
+| Mode | Key | Elements | Container Width | Dynamic Drop | Score Saved | Description |
+|------|-----|----------|-----------------|:------------:|:-----------:|-------------|
+| Lite | `B` | 12 | 480 ref | ❌ | ✅ | Classic difficulty, recommended for new players |
+| Full | `A` | 17 | 540 ref | ✅ | ✅ | Full 17-element chain, harder |
+| Debug | `C` | 12 | 480 ref | ❌ | ❌ | Requires password 3919, basic param panel |
+| Full Debug | (card) | 17 | 540 ref | ✅ | ❌ | Requires password 3919, full real-time panel |
+| Demo | `D` | 12 | 480 ref | ❌ | ❌ | AI autoplay (SmartBot / DumbBot / DemoBot) |
+| Q Self | `Q` | 12 | 480 ref | ❌ | ✅ | Custom images/names/messages via q_custom.json |
+
+<Tip>
+  Start with **Lite mode** if you're new to Big Alloy Merge. Its 12-element chain and narrower container give you a comfortable introduction to the merge mechanics before you tackle the full 17-element experience.
+</Tip>
+
+<Note>
+  **Debug** and **Full Debug** modes are password-protected. Type `3919` at the mode select screen, then choose your debug variant. Scores recorded in either debug mode are not saved to your history.
+</Note>
+
+## Mode Pages
+
+<CardGroup cols={2}>
+  <Card title="Lite Mode" icon="feather" href="/modes/lite">
+    The classic 12-element experience. Fixed opening sequence, JFT2 physics, and full score tracking. The recommended starting point for all players.
+  </Card>
+  <Card title="Full Mode" icon="layer-group" href="/modes/full">
+    All 17 elements from 西西 to 钇钾, a wider 540-ref container, and the dynamic drop system that unlocks new ball types as you merge higher tiers.
+  </Card>
+  <Card title="Debug Mode" icon="bug" href="/modes/debug">
+    Adjust gravity, friction, elasticity, drop weights, and container dimensions in real time. Password `3919` required. Scores are not recorded.
+  </Card>
+  <Card title="Demo Mode" icon="robot" href="/modes/demo">
+    Watch SmartBot, DumbBot, or DemoBot play the game for you. Great for studying chain reactions and the physics engine without lifting a finger.
+  </Card>
+  <Card title="Q Self Mode" icon="image" href="/modes/qself">
+    Replace every ball image and name with your own photos and text, loaded from `q_custom.json`. A personal take on Big Alloy Merge.
+  </Card>
+</CardGroup>

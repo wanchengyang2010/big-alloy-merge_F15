@@ -1,0 +1,65 @@
+---
+title: "Elements in Big Alloy Merge: The Fusion Chain Explained"
+sidebarTitle: "Overview"
+description: "Big Alloy Merge features two element sets — a 12-element Lite chain and a 17-element Full chain. Discover how tiers work, how merges progress, and what each element means."
+---
+
+Every object you drop in Big Alloy Merge is called an **element**, and each one belongs to a numbered tier. When two elements of the same tier collide, they fuse together into the next tier up, awarding you points equal to the new element's score value. The chain continues from the smallest element all the way to the ultimate 钇钾 🪙 — and your whole session builds toward that single crowning merge.
+
+## How the Chain Works
+
+Each element occupies exactly one tier, starting at tier 0 (the smallest) and ascending to the final tier. When a merge occurs, the two source elements disappear and a single new element of the next tier spawns at the collision point. That new element immediately becomes a live physics object — it can roll, stack, and trigger further merges in a chain reaction.
+
+You score **the point value of the newly created element** with every merge. There is no bonus for chain reactions, so every individual merge in a cascade is scored on its own. The ultimate element, 钇钾 🪙, cannot merge into anything further; reaching it triggers the full-screen victory celebration.
+
+## Two Element Sets
+
+Big Alloy Merge ships with two independent element chains, each tuned to its own game modes:
+
+| Set | Elements | Modes | Final element |
+|-----|:--------:|-------|:-------------:|
+| **Full** | 17 | Full mode, Full Debug | 钇钾 🪙 (tier 16) |
+| **Lite** | 12 | Lite, Debug, Demo, Q Self | 钇钾 🪙 (tier 11) |
+
+The two chains are **completely independent** — ball radii, score values, and drop pools are all set separately. An element that shares a name between modes (for example 灰鼠 🐁) may have a different radius and point value depending on which chain is active.
+
+## Drop Sources
+
+Not every element can fall from above. The game divides elements into two sources:
+
+- **Droppable** — these tiers are part of the random drop pool and can appear as your next ball. At the start of a game you always work through a fixed opening sequence before the random pool begins.
+- **Merge-only** — these tiers can only be created through a successful merge. You will never see them queued as a drop.
+
+In Full mode, the **Dynamic Drop System** gradually widens the droppable pool as you progress — merging a high-tier element unlocks the tier two steps below it for future drops, keeping the late game feeling fresh. Lite mode always draws from a fixed tier 0–5 pool and does not have dynamic drop.
+
+<Note>
+The fixed opening drop sequences guarantee a gentle ramp-up at the start of each game. See the [Full Chain](/elements/full-chain) and [Lite Chain](/elements/lite-chain) pages for the exact sequences.
+</Note>
+
+## Special Elements
+
+<CardGroup cols={2}>
+  <Card title="✨ 西西 (tier 0 · Full)" icon="person-walking">
+    The smallest element in Full mode. 西西 🕴️ replaced 嘟嘟 ☢️ in **v2.3.0.0**, bringing a new image, sound, and the iconic merge message *"xiiiiii"*. It is always droppable.
+  </Card>
+  <Card title="✨ 春宇 (tier 14 · Full)" icon="infinity">
+    Inserted between 狒狒 and 锐哥 in **v2.3.0.0**, 春宇 ♾️ is a merge-only element near the top of the Full chain. Its addition shifted 恐龙 and 狒狒 down one tier each and removed 雪豹 from the chain.
+  </Card>
+  <Card title="🏆 钇钾 (ultimate · both modes)" icon="coin">
+    The final element in every chain — tier 16 in Full mode and tier 11 in Lite mode. Merging two 锐哥 🔪 elements to produce 钇钾 🪙 triggers the victory screen, plays *L'Internationale*, and ends your run on the highest possible note.
+  </Card>
+  <Card title="🔄 Dynamic unlocks (Full only)" icon="rotate">
+    In Full mode, every time you merge up to tier N, tier N−2 becomes eligible to appear in future drops. This means the longer you play, the wider and more challenging the drop pool becomes.
+  </Card>
+</CardGroup>
+
+## Explore Each Chain
+
+<CardGroup cols={2}>
+  <Card title="Full Chain — 17 Elements" icon="list-ol" href="/elements/full-chain">
+    Complete tier table for Full mode, including base radius, score, drop status, merge message, and the v2.3.0.0 changelog.
+  </Card>
+  <Card title="Lite Chain — 12 Elements" icon="list" href="/elements/lite-chain">
+    Complete tier table for Lite mode, with independent radius and score values and the fixed drop sequence.
+  </Card>
+</CardGroup>

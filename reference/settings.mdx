@@ -1,0 +1,70 @@
+---
+title: "Settings and Configuration in Big Alloy Merge"
+sidebarTitle: "Settings"
+description: "Access sound controls, manage custom modes, configure Q Self mode, and adjust window behavior through the Big Alloy Merge settings menu and in-game options."
+---
+
+Big Alloy Merge gives you control over audio, display, and gameplay parameters through two places: the Settings menu on the mode select screen and the in-game button bar. Some options — like the real-time physics panel — are only available in specific game modes.
+
+## Opening Settings
+
+On the mode select screen, click the **⚙ gear icon** in the corner to open the Settings menu. From here you can adjust sound, manage custom modes, and configure Q Self mode.
+
+## Settings Categories
+
+### 1. Sound
+
+The Sound section lets you control all audio output:
+
+- **Global sound on/off** — mutes both music and sound effects at once
+- **Music volume** — adjusts the background music level independently
+- **Effects volume** — adjusts merge and drop sound effect levels independently
+
+Sound settings are saved immediately when you change them and persist across sessions — you won't need to re-mute the game every time you launch.
+
+You can also toggle mute at any time without opening Settings. The **🔊/🔇 button** appears both on the mode select screen and in the in-game top button bar.
+
+### 2. Language
+
+The Language setting is reserved for future use. The current release is **Chinese only**. An English UI is planned for a future version.
+
+### 3. Mode Management
+
+The Mode Management section lets you:
+
+- **Create new custom modes** — click "+ New Mode" and enter a name; the new mode is copied from an existing mode as a starting point
+- **Delete custom modes** — removes the mode and its configuration permanently
+- **Reorder modes** — drag cards to rearrange the order they appear on the mode select screen
+
+All custom mode parameters (physics, container dimensions, drop weights) are independent. Editing one mode never affects another.
+
+### 4. Q Self Mode
+
+Q Self mode lets you replace ball images, names, and merge messages with your own custom content. In the Q Self settings:
+
+- Set a **custom image** for each ball tier (images are processed automatically to 1024×1024 RGBA PNG format)
+- Set a **custom name** for each tier
+- Set a **custom merge message** that appears when two balls of that tier combine
+
+Configuration is saved to `q_custom.json` and loaded each time you enter Q Self mode.
+
+## In-Game Controls
+
+The top button bar is visible during gameplay and gives you quick access to common actions without opening any menus:
+
+| Control | How to Access |
+|---------|--------------|
+| Toggle mute | Click 🔊/🔇 button in the top bar, or click the sound icon on the mode select screen |
+| Toggle fullscreen | Press **F11** or click the **⬜ button** |
+| Maximize window | Click the **🔲 button** (maximizes without covering the taskbar) |
+| Minimize window | Click the **━ button** |
+| Return to menu | Click the **🏠 button** (auto-saves your game first) |
+| Restart game | Click the **🔄 button** or press **R** |
+
+## Debug Mode Settings
+
+In **Full Debug** mode (requires the debug password `3919`), an additional real-time physics parameter panel is available. Press **F3** or click the **🐛 button** to open or close it. The panel lets you adjust every physics and container parameter live — changes take effect immediately without restarting the game.
+
+<Note>
+  Any session where debug tools are used is marked as `debug_tainted`. Scores from tainted sessions are excluded from the high score file. This applies even if you close the debug panel before the game ends.
+</Note>

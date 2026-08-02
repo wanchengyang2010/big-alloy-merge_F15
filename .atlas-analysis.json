@@ -1,23 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "name": "Big Alloy Merge",
+  "projectType": "general",
+  "projectName": "Big Alloy Merge",
+  "projectDescription": "A Suika-style physics merge game built with Python and pygame-ce, featuring a 17-element fusion chain, 480 FPS physics engine, and multiple game modes.",
   "theme": "almond",
-  "colors": {
-    "primary": "#f1a90f",
-    "light": "#551404",
-    "dark": "#dcd0c4"
-  },
-  "logo": {
-    "light": "https://media.brand.dev/5a93f475-d7f5-4925-be0e-ef91ee64b362.png",
-    "dark": "https://media.brand.dev/5a93f475-d7f5-4925-be0e-ef91ee64b362.png"
-  },
-  "favicon": "https://media.brand.dev/573a8e4f-26a5-43cf-a39c-fe72d4955a91.svg",
-  "navbar": {
-    "primary": {
-      "type": "github",
-      "href": "https://github.com/wanchengyang2010/big-alloy-merge"
-    }
-  },
+  "primaryColor": "#f1a90f",
+  "lightColor": "#551404",
+  "darkColor": "#dcd0c4",
   "navigation": {
     "tabs": [
       {
@@ -99,5 +87,28 @@
         ]
       }
     ]
-  }
+  },
+  "keyFeatures": [
+    "17-element fusion chain from 西西 to 钇钾",
+    "480 FPS physics engine with vsync",
+    "JaneFlyThought2 rotational physics with collision torque",
+    "Dynamic drop system unlocking higher-tier balls as you merge (Full mode)",
+    "Six game modes: Lite, Full, Debug, Full Debug, Demo, Q Self",
+    "AI autoplay with SmartBot / DumbBot / DemoBot",
+    "Q Self mode with custom ball images and names",
+    "NSIS installer for Windows + AppImage / .deb for Linux",
+    "Real-time parameter debug panel (Full Debug mode)",
+    "Save/restore game state with AppData persistence",
+    "Per-element sound effects and background music system",
+    "Spatial hash grid for O(1) collision detection"
+  ],
+  "publicApiSurface": [
+    "Keyboard shortcuts: B (Lite), A (Full), C (Debug), D (Demo), Q (Q Self), R (Restart), F11 (Fullscreen), ESC (Exit)",
+    "Debug password: 3919",
+    "q_custom.json for Q Self mode customization",
+    "assets/images/ folder for custom ball PNG images",
+    "Save data: %APPDATA%\\Trash Panda Q Opal\\Big Alloy Merge\\",
+    "elements.txt and Messages.txt for element names and merge messages",
+    "constants.py: DYNAMIC_DROP_ENABLED, DYNAMIC_DROP_UNLOCK_OFFSET, DYNAMIC_DROP_RATE_LIMIT"
+  ]
 }

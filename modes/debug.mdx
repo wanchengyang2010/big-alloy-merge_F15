@@ -1,0 +1,86 @@
+---
+title: "Debug and Full Debug Mode: Tweak Physics in Real Time"
+sidebarTitle: "Debug Mode"
+description: "Debug modes in Big Alloy Merge let you adjust gravity, friction, drop weights, and container size in real time using the in-game parameter panel. Password: 3919."
+---
+
+Debug mode and Full Debug mode give you direct access to the physics and configuration layer that underlies every game of Big Alloy Merge. You can change gravity, friction, container dimensions, drop probability weights, and even per-ball properties — all while the game is running, with every change taking effect immediately. These modes exist so you can experiment freely, but to keep the leaderboard fair, scores are never recorded when debug tools are in use.
+
+## How to Unlock
+
+Both debug modes are password-protected. Follow these steps to access them:
+
+<Steps>
+  <Step title="Launch the game and reach the mode select screen">
+    Start Big Alloy Merge normally. You'll land on the mode select screen after the splash.
+  </Step>
+  <Step title="Type the debug password">
+    On the mode select screen, type **`3919`** using your keyboard. You don't need to click a text field — just type the digits directly. The game listens for this sequence in the background.
+  </Step>
+  <Step title="Choose your debug variant">
+    - Press **`C`** to enter **Debug mode** (12 elements, basic panel).
+    - Click the **Full Debug** card to enter **Full Debug mode** (17 elements, full real-time panel).
+  </Step>
+  <Step title="Open the parameter panel">
+    Once inside the game, press **`F3`** or click the **🐛** button in the top button bar to toggle the parameter panel open or closed.
+  </Step>
+</Steps>
+
+## Debug Mode (12 Elements)
+
+Debug mode mirrors the Lite mode configuration — 12 elements, 480-ref container, JFT2 physics — with the addition of a basic parameter panel containing two controls:
+
+- **Tier selector** — lock the drop to a specific tier (0–11) instead of drawing randomly. Useful for stress-testing a particular ball size or setting up a specific board state. Set it to "Auto" to restore random drops.
+- **Weight editor** — adjust the drop probability weight for each tier individually on a scale of 0–10. Setting a tier's weight to 0 removes it from the drop pool entirely; setting it to 10 makes it appear roughly ten times as often as a tier with weight 1.
+
+## Full Debug Mode (17 Elements)
+
+Full Debug mode uses the Full mode configuration — 17 elements, 540-ref container, dynamic drop enabled — and adds the complete real-time parameter panel. Every physics and visual property is exposed and editable while the game runs.
+
+### Physics Parameters
+
+| Parameter | What It Controls |
+|-----------|-----------------|
+| Gravity | Downward acceleration in px/s² |
+| Friction | Ball-to-ball contact friction coefficient |
+| Elasticity | How much energy balls retain after collision |
+| Drop delay | Seconds between successive drops |
+
+### Container Parameters
+
+| Parameter | What It Controls |
+|-----------|-----------------|
+| Width | Horizontal span of the container (ref units) |
+| Height | Vertical span of the container |
+| Overflow line | Y position of the Game Over line |
+
+### Per-Ball Parameters
+
+Each of the 17 tiers has its own independent parameter set:
+
+| Parameter | What It Controls |
+|-----------|-----------------|
+| Mass | Ball mass (default: radius × 10) |
+| Friction | Per-ball friction override |
+| Elasticity | Per-ball elasticity override |
+| Color (R / G / B) | Ball fill color |
+| Image | Ball image filename (e.g. `0.png`) |
+| Message | Text shown on merge |
+| Sound | Merge sound effect file |
+
+**Editing a value** — click any numeric value in the panel to place your cursor in an inline text field, type the new number, and press Enter. The change applies instantly.
+
+**Apply to all balls** — click the **全** button next to any per-ball parameter to push that value to all 17 tiers at once, saving you from editing each row individually.
+
+<Important>
+  Scores are **never recorded** in either debug mode. The game sets an internal `debug_tainted` flag the moment you open a debug session, and that flag persists for the rest of the run. Restarting the game from scratch (back to the mode select screen) clears the flag.
+</Important>
+
+## Toggling the Panel
+
+You can show or hide the parameter panel at any time without interrupting gameplay:
+
+- **Keyboard:** press `F3`
+- **Button bar:** click the **🐛** debug button
+
+Hiding the panel does not reset any values you've changed — your edits remain active until you restart or change them again.

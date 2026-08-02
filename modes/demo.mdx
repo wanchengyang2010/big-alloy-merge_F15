@@ -1,0 +1,52 @@
+---
+title: "Demo Mode: Watch AI Play Big Alloy Merge Automatically"
+sidebarTitle: "Demo Mode"
+description: "Demo mode runs an AI bot that plays Big Alloy Merge for you. Choose from SmartBot, DumbBot, or DemoBot and watch the physics engine in action."
+---
+
+Demo mode hands the controls over to an AI bot and lets you sit back and watch. The bot drops balls, triggers chain reactions, and occasionally produces spectacular cascades — all without any input from you. It's a great way to observe how the physics engine behaves under continuous play, learn which board positions tend to produce long chains, or simply enjoy the game as a screensaver. No score is recorded in Demo mode.
+
+## How to Start
+
+Press **`D`** on the mode select screen to launch Demo mode. The game will start immediately with the selected bot in control.
+
+## Bot Variants
+
+Demo mode offers three distinct AI personalities:
+
+<CardGroup cols={3}>
+  <Card title="SmartBot" icon="brain">
+    Attempts to make optimal merges by scanning the container for clustered same-tier balls and targeting the drop position most likely to trigger a chain reaction. Produces the longest average runs and the highest scores of the three bots.
+  </Card>
+  <Card title="DumbBot" icon="dice">
+    Drops balls at entirely random horizontal positions within the container, with no awareness of what's already on the stack. Chaotic and unpredictable — great for stress-testing the physics engine.
+  </Card>
+  <Card title="DemoBot" icon="play">
+    A balanced showcase bot that mixes targeted drops with occasional random placements. Designed to produce visually interesting gameplay without either excelling or failing too quickly.
+  </Card>
+</CardGroup>
+
+## Visual Indicators
+
+While Demo mode is running, several overlays make the bot's decision-making visible:
+
+- **Red "Demo Mode" label** — displayed in the corner throughout the session so it's clear no human is playing.
+- **Gold pulse highlight** — a pulsing golden marker shows the bot's current target drop position before each ball is released.
+- **Dashed aim line and crosshair** — a vertical dashed line with a crosshair descends from the drop point to the stack, showing the projected path of the incoming ball.
+
+## Configuration
+
+Demo mode uses the same 12-element Lite configuration as regular Lite mode:
+
+| Parameter | Value |
+|-----------|-------|
+| Elements | 12 (tiers 0–11) |
+| Container width | 480 ref |
+| Overflow line | 135 ref |
+| Physics model | JFT2 (same as Lite) |
+| Dynamic drop | ❌ Disabled |
+| Score recorded | ❌ Not saved |
+
+<Tip>
+  Demo mode is an excellent learning tool. Watch SmartBot for a few rounds to see which drop positions it consistently targets and how it sets up chain reactions — you can apply the same strategies in your own Lite or Full mode games.
+</Tip>

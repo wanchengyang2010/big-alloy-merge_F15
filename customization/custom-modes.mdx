@@ -1,0 +1,123 @@
+---
+title: "Create and Manage Custom Big Alloy Merge Game Modes"
+sidebarTitle: "Custom Modes"
+description: "Build custom Big Alloy Merge modes with unique physics, containers, and elements using the Settings UI or by editing modes.json in your AppData folder."
+---
+
+Big Alloy Merge lets you create, duplicate, rename, and delete your own game modes entirely from within the game. Each custom mode carries its own physics parameters, container dimensions, drop weights, and per-element definitions — completely independent of the built-in modes. Your high scores in custom modes are tracked separately, so experimenting never affects the Lite or Full leaderboards.
+
+## Opening Settings
+
+Click the **⚙** gear button on the mode select screen to open the Settings interface. The left panel lists every mode — built-in and custom. The right panel shows three parameter tabs for the currently selected mode: **Math Model**, **Physics Engine**, and **Art Framework**.
+
+<Note>
+  Built-in modes (Lite, Full, Debug, Full Debug, Demo) display a 🔒 lock indicator and cannot be edited or deleted. Create a custom mode based on one of them to get an editable copy with the same starting parameters.
+</Note>
+
+## Creating a New Mode
+
+<Steps>
+  <Step title="Open Settings">
+    On the mode select screen, click the **⚙** gear button. The Settings screen opens with the current active mode pre-selected in the left panel.
+  </Step>
+
+  <Step title='Click "+ New Mode"'>
+    In the left panel, click the **+ 新建** (New Mode) button. A text input dialog appears prompting you for a mode name. Type a descriptive name and press **Enter** to confirm. Press **Esc** to cancel without creating a mode.
+  </Step>
+
+  <Step title="Enter a mode name">
+    Type any name up to 50 characters. The name appears on the mode select screen card and in the Settings list. You can rename it later using the **✏ Rename** button at the bottom of the left panel.
+  </Step>
+
+  <Step title="Choose a base mode">
+    The new mode is created as a copy of **Lite mode** by default — inheriting its 12-element set, container dimensions, and physics values. If you want a 17-element starting point, duplicate the **Full** mode instead using the **复制** (Duplicate) button after selecting it.
+  </Step>
+
+  <Step title="Customize parameters in the right panel">
+    Select your new mode in the left panel, then click through the three tabs to adjust any parameter. Click any value row to open an edit dialog; use the arrow keys for fine-grained adjustment and press **Enter** to confirm. Changes save automatically to `modes.json`.
+
+    To tune physics in real time while the game is running, enter **Full Debug** mode (password `3919`) and press **F3** to open the live parameter panel — every change takes effect immediately without restarting the round.
+  </Step>
+</Steps>
+
+## Available Settings per Mode
+
+### Math Model tab
+
+| Parameter | Description |
+|-----------|-------------|
+| Container Width | Horizontal interior width of the drop container (px at reference resolution 600×900) |
+| Overflow Line Y | Vertical position of the red overflow line; balls resting above this line for 3 s end the game |
+| Tier Count | Number of elements active in this mode (2–17) |
+| Max Drop | Highest tier index that can appear as a random drop |
+| Drop Line Y | Vertical position of the drop preview line |
+| Initial Sequence | Fixed sequence of tier indices dropped at the start of a round (comma-separated) |
+| Per-tier: Radius | Ball radius at reference resolution |
+| Per-tier: Points | Score awarded when two balls of this tier merge |
+| Per-tier: Drop Weight | Relative probability weight for this tier appearing as a drop (0–10 scale) |
+
+### Physics Engine tab
+
+| Parameter | Description |
+|-----------|-------------|
+| Gravity | Downward acceleration in px/s² (default: 1800) |
+| Initial Drop Speed | Vertical speed given to a ball the moment it releases (default: 1600 px/s) |
+| Ball Elasticity | Coefficient of restitution between balls (0 = fully inelastic) |
+| Ball Friction | Coulomb friction between ball surfaces |
+| Wall Friction | Friction applied when a ball slides along a container wall |
+| Air Resistance | Drag coefficient (0 = vacuum, the default) |
+| Wall Elasticity | Restitution coefficient for wall collisions |
+| Drop Delay | Cooldown in seconds between successive drops |
+| Overflow Time | Seconds a ball must remain above the overflow line before triggering Game Over |
+| Magnetic Force | Attraction strength pulling same-tier balls together |
+| Magnetic Range | Distance threshold at which magnetic attraction activates |
+| Rotation Physics | Toggle angular velocity and torque simulation on/off |
+| Angular Damping | Fraction of angular velocity retained per second (lower = faster spin decay) |
+| Wall Rotational Friction | Rotational friction applied on wall contact |
+| Dynamic Drop | When enabled, merging tier N unlocks tier N−2 as a possible drop (Full mode default) |
+| Per-tier: Mass | Ball mass; defaults to `radius × 10` when left at 0 |
+| Per-tier: Friction | Per-ball friction override (overrides mode default when set) |
+| Per-tier: Elasticity | Per-ball elasticity override |
+
+### Art Framework tab
+
+| Parameter | Description |
+|-----------|-------------|
+| Background Image | PNG file used as the container background |
+| Background Overlay Alpha | Opacity of the dark overlay drawn over the background (0 = none, 255 = fully opaque) |
+| Merge Sound | Audio file played on any merge event |
+| Victory Sound | Short audio clip played on ultimate-ball merge |
+| Per-tier: Color | RGB color used to tint the ball (shown when no image is set) |
+| Per-tier: Image | PNG ball image file (1024×1024 RGBA; click to browse and auto-process) |
+| Per-tier: Message | Text displayed in the merge popup for this tier |
+| Per-tier: Sound | Per-ball merge sound override (empty = use mode default) |
+
+## Mode Management
+
+| Action | How |
+|--------|-----|
+| **Rename** | Select the custom mode → click **✏ 重命名** → type new name → Enter |
+| **Duplicate** | Select any mode → click **复制** → a new editable copy is created |
+| **Delete** | Select a custom mode → click **删除** (only enabled for non-built-in modes) |
+| **Reorder** | Not yet available in the UI; edit `modes.json` directly and set the `"order"` field for each mode |
+
+<Warning>
+  Deleting a custom mode is **permanent** — there is no undo. If you delete `modes.json` entirely, all custom modes are lost. Back up the file before making bulk edits.
+</Warning>
+
+## Where Modes Are Stored
+
+All mode data is written to a single JSON file in your user data directory:
+
+| Platform | Path |
+|----------|------|
+| Windows | `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\modes.json` |
+| Linux | `~/.local/share/Trash Panda Q Opal/Big Alloy Merge/modes.json` |
+
+Custom ball images processed through the Settings UI are saved under the `modes/` subdirectory next to `modes.json`, organized by mode ID.
+
+You can edit `modes.json` directly in a text editor for bulk changes — the file is standard JSON and is re-read each time you launch the game.
+
+<Tip>
+  Experiment freely with custom modes — scores recorded there are stored in a separate leaderboard and have no effect on the built-in Lite or Full high-score tables.
+</Tip>

@@ -1,0 +1,54 @@
+---
+title: "Scoring System and High Score Tracking in Big Alloy Merge"
+sidebarTitle: "Scoring"
+description: "Learn how Big Alloy Merge calculates your score, how high scores are saved, where your save data lives, and how score tracking differs between game modes."
+---
+
+Every merge you pull off in Big Alloy Merge puts points on the board. The score is straightforward — fuse two balls, earn the fused tier's point value — but the real depth comes from chasing higher-tier merges and engineering the chain reactions that stack up points in a single drop. Understanding how scores are saved and which modes count toward your personal best will help you get the most out of every session.
+
+## How Scoring Works
+
+Each time two same-tier balls fuse, the game immediately adds the **point value of the resulting ball's tier** to your running score. There is no multiplier for chain reactions, but every link in the chain triggers its own separate score addition — a four-step chain can award points four times in under a second.
+
+Point values scale with tier: low-tier merges score single digits while the highest tiers award hundreds of points. For exact values broken down by element, see the element reference pages for [Lite mode](/elements/lite-chain) and [Full mode](/elements/full-chain).
+
+## High Score File
+
+Your scores are written to **`highscore.txt`** automatically at the end of each scored session. The file stores up to **20 entries**. The **first line always holds your all-time best score** — the game reads this value to display your personal record on the game-over screen.
+
+### Save Data Location
+
+On Windows, your high-score file lives inside your user profile's AppData folder:
+
+```
+%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\highscore.txt
+```
+
+You can open this path directly in File Explorer by pasting it into the address bar. To back up your scores, copy the entire `Big Alloy Merge\` folder. To reset your scores, delete `highscore.txt` — the game will create a fresh file on the next scored run.
+
+## Score Tracking by Mode
+
+Not every mode saves your score. The table below shows exactly which modes contribute to `highscore.txt`.
+
+| Mode | Score Recorded? |
+|------|-----------------|
+| Lite | ✅ Yes |
+| Full | ✅ Yes |
+| Debug | ❌ No (`debug_tainted`) |
+| Full Debug | ❌ No |
+| Demo | ❌ No |
+| Q Self | ✅ Yes |
+
+<Warning>
+  Entering Debug mode or Full Debug mode sets an internal `debug_tainted` flag for that session. Even if you do not change any parameters, your score will **not** be saved to `highscore.txt`. Switch back to Lite, Full, or Q Self mode and start a fresh game if you want your score to count.
+</Warning>
+
+## Game Over Screen
+
+When the game ends, you see your **current session score** alongside the **last 5 history entries** from your `highscore.txt`. This gives you instant context on how your run compares to your recent form. To jump straight back into the action, **click anywhere inside the container** area — no need to navigate back to the mode-select screen.
+
+## Maximising Your Score
+
+<Tip>
+  Higher-tier merges in Full mode yield more points than their Lite mode equivalents because the 17-element chain extends the scoring ceiling significantly. If you are chasing a personal best, practise chain-reaction setups in Lite mode first, then carry that technique into Full mode where each merge pays out more.
+</Tip>

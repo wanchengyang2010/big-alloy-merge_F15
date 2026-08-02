@@ -1,0 +1,57 @@
+---
+title: "How to Play Big Alloy Merge: Rules and Win Conditions"
+sidebarTitle: "Rules"
+description: "Understand the core rules of Big Alloy Merge — how to drop balls, trigger merges, chain reactions, avoid game over, and win by fusing the legendary 钇钾."
+---
+
+Big Alloy Merge is a physics-based puzzle game in the Suika tradition: you drop balls into a container, same-tier balls that touch fuse into the next tier, and the stack must never spill above the red overflow line. Your ultimate goal is to work your way through all 17 elements and fuse the legendary **钇钾 🪙** — the highest tier in the chain. Every drop is a decision, and every merge can spark a cascade that reshapes the entire stack.
+
+## Core Rules
+
+<Steps>
+  <Step title="A preview ball appears above the container">
+    Before each drop, a preview ball is displayed above the container at the current drop line. Its tier is shown alongside the element name so you know exactly what you are working with.
+  </Step>
+  <Step title="Hover or drag to position, then release to drop">
+    Move your mouse — or press and hold inside the container on a touchscreen — to slide the preview ball left or right. When you are happy with the position, release to drop the ball into the container.
+  </Step>
+  <Step title="Same-tier balls that touch merge into the next tier">
+    The moment two balls of identical tier make contact, they instantly fuse into a single ball of the next tier. Each merge adds that tier's point value directly to your score.
+  </Step>
+  <Step title="Chain reactions cascade automatically">
+    The newly merged ball may land on — or roll into — another ball of the same tier, triggering another merge. This can continue across multiple tiers in a single drop, earning you a flurry of points without any additional input.
+  </Step>
+  <Step title="Ball stack above the overflow line and stay still for 3 seconds = Game Over">
+    A red dashed line marks the overflow boundary near the top of the container. If any ball's topmost point rises above that line **and** the ball remains stable (moves less than 3 px per frame) for **3 continuous seconds**, the game ends immediately.
+  </Step>
+  <Step title="Fuse 钇钾 🪙 (tier 16) for victory">
+    Merge the two tier-15 balls (锐哥 🔪) to produce **钇钾 🪙**, the tier-16 ultimate element. A full-screen celebration effect plays and the victory music begins — you have won.
+  </Step>
+</Steps>
+
+## Win and Lose Conditions
+
+| Status | Condition |
+|--------|-----------|
+| ✅ Victory | Fuse 钇钾 (tier 16) |
+| 💀 Game Over | Any ball's top exceeds the overflow line and remains stable ≥ 3 seconds |
+| 🎯 Debug | Scores recorded while `debug_tainted = True` are not saved to the high-score file |
+
+## Chain Reactions
+
+A chain reaction occurs when a freshly merged ball immediately contacts another ball of the same tier, triggering further merges without any new drop. Chains can run across multiple tier jumps in a fraction of a second, dramatically boosting your score and clearing space in the container.
+
+<Tip>
+  Set up chain reactions deliberately. Try to arrange groups of the same-tier balls close together before dropping a ball that completes the first merge — the domino effect will handle the rest automatically.
+</Tip>
+
+## Spawn Protection and Merge Cooldown
+
+Two timing rules prevent physics glitches from triggering false events:
+
+- **Spawn protection** — A ball you just dropped has a **0.20-second** grace period during which overflow detection does not apply to it. A ball created by a merge enjoys a slightly longer **0.35-second** grace period. This prevents a freshly spawned ball from instantly triggering game over before gravity has had a chance to pull it down.
+- **Merge cooldown** — After any merge fires, there is a **0.25-second** cooldown before that ball can participate in another merge. This keeps the physics engine stable and prevents simultaneous double-merges from the same pair of balls.
+
+## Full Mode: Dynamic Drop Unlocks
+
+In Full mode, the drop pool expands as you progress. When you fuse a ball of tier *N*, the game unlocks tier *N−2* as a possible drop, gradually introducing larger balls into your queue. This ramps up the strategic tension in the mid-to-late game and is exclusive to Full mode and Full Debug mode.

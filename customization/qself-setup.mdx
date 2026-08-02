@@ -1,0 +1,105 @@
+---
+title: "Set Up Q Self Mode with Your Own Custom Ball Images"
+sidebarTitle: "Q Self Setup"
+description: "Set up Q Self mode in Big Alloy Merge with q_custom.json — supply your own ball names, images, and merge messages to personalize all 12 elements."
+---
+
+Q Self mode lets you replace the default 12-element set with your own images, custom names, and personal merge messages. Every ball in the container becomes yours — the physics, scoring, and container rules stay identical to Lite mode, but every element reflects whatever photos or artwork you supply.
+
+## What Q Self Mode Does
+
+When you launch Q Self mode (press **Q** from the mode select screen), the game loads your configuration from `q_custom.json` instead of the built-in Lite element table. All 12 tiers use your names, your images, and your merge messages. Scoring works the same way, the overflow line sits at the same height, and the full physics engine runs unchanged — only the visual and textual identity of each ball is replaced.
+
+<Note>
+  Q Self mode uses Lite mode physics: 12 elements, the same container dimensions, and the same scoring table. Scores earned in Q Self mode are recorded separately from the standard Lite leaderboard.
+</Note>
+
+## Setting Up Q Self Mode
+
+<Steps>
+  <Step title="Prepare your images">
+    Gather exactly **12 image files** — one for each tier from 0 (smallest) to 11 (largest, the ultimate merge target). You can use any common format: JPG, PNG, BMP, and others all work. The game's image processor automatically normalizes every image to a **1024×1024 RGBA PNG**, so you don't need to pre-process them yourself.
+
+    **Image tips:**
+    - Any aspect ratio is accepted. The processor scales to fit the longer edge, then center-crops and pads to a perfect square.
+    - Photos with a clear subject against a clean or transparent background look best in-game.
+    - PNG files with a transparent background produce the cleanest result; the processor preserves existing transparency.
+    - The processor outputs exactly **1024×1024 RGBA** regardless of the source dimensions or format.
+    - Recommended: use images with the subject roughly centered so the auto-crop keeps the important part of the picture.
+  </Step>
+
+  <Step title="Create q_custom.json in the game directory">
+    Create a file named `q_custom.json` in the same folder as `main.py` (Python source) or in `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\` (installed version on Windows). The file must contain a JSON object with a single `"elements"` array of exactly 12 objects, ordered from tier 0 to tier 11.
+
+    ```json
+    {
+      "elements": [
+        {
+          "tier": 0,
+          "name": "Your Name",
+          "image": "path/to/image0.jpg",
+          "message": "Your merge message!"
+        },
+        {
+          "tier": 1,
+          "name": "Another Name",
+          "image": "path/to/image1.png",
+          "message": "Another merge message!"
+        },
+        {
+          "tier": 2,
+          "name": "Third Name",
+          "image": "path/to/image2.jpg",
+          "message": ""
+        }
+      ]
+    }
+    ```
+
+    **Field reference:**
+
+    | Field | Required | Description |
+    |-------|----------|-------------|
+    | `tier` | Yes | Integer 0–11, identifying the element's position in the merge chain |
+    | `name` | Yes | Display name shown on the drop preview and merge popup |
+    | `image` | Yes | Path to the source image file (absolute or relative to the game directory) |
+    | `message` | No | Text shown when two balls of this tier merge; leave `""` for no message |
+
+    Provide all 12 entries (tiers 0 through 11). Missing tiers fall back to the default Lite element for that position.
+  </Step>
+
+  <Step title="Launch the game and press Q">
+    Start Big Alloy Merge and wait for the mode select screen to appear. Press **Q** (or click the Q Self card) to enter Q Self mode. The game reads `q_custom.json`, processes each image into a 1024×1024 RGBA PNG, and loads your custom elements. You'll see your names and images on the drop preview immediately.
+
+    If the game cannot find `q_custom.json` or a listed image file, it logs the error and falls back to the default Lite element for that tier — so a partial configuration still works.
+  </Step>
+</Steps>
+
+## Image Requirements at a Glance
+
+<Note>
+  The image processor handles format conversion and resizing automatically. You only need to ensure your source files are readable image files.
+
+  - **Accepted formats:** JPG, PNG, BMP, and any format supported by pygame-ce
+  - **Output format:** PNG, RGBA, exactly 1024×1024 pixels
+  - **Aspect ratio:** Any — the processor scales to fit the long edge, then center-crops to square
+  - **Transparency:** Preserved from source PNGs; non-transparent images get a fully opaque background
+  - **Subject placement:** Roughly centered gives the best results after auto-crop
+</Note>
+
+## Using the Settings UI Instead of Editing JSON
+
+If you'd rather not edit `q_custom.json` by hand, you can configure Q Self mode through the in-game Settings interface:
+
+1. On the mode select screen, click the **⚙** gear button to open Settings.
+2. Select the **Q Self** mode from the left panel (or create a new custom mode based on Lite).
+3. Switch to the **Art** tab in the right panel.
+4. Click any tier row and then click the **Image** field to open a file browser and pick your image — the processor runs automatically.
+5. Click the **Message** field to type a custom merge message for that tier.
+6. Click the **Name** field (Math tab) to rename the element.
+
+Changes made through the Settings UI are saved immediately to `modes.json` in your AppData folder and take effect the next time you start a round.
+
+<Tip>
+  The Settings UI's built-in file browser triggers the same `image_processor.py` pipeline as `q_custom.json` loading — you get the same automatic 1024×1024 RGBA normalization either way.
+</Tip>

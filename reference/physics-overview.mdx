@@ -1,0 +1,105 @@
+---
+title: "Physics Engine Overview: How Big Alloy Merge Simulates Physics"
+sidebarTitle: "Physics Overview"
+description: "Big Alloy Merge runs a custom 480 FPS physics engine. Learn about the simulation loop, scaling system, collision passes, sleep mechanics, and the three theoretical frameworks."
+---
+
+Big Alloy Merge runs a fully custom physics engine built in Python with pygame-ce. Every frame, the engine integrates gravity, resolves collisions across multiple passes, checks for merges, and manages a sleep system to keep idle balls quiet. The simulation runs at 480 FPS with vsync enabled (v2.3+), giving you smooth, tear-free motion and highly responsive drop physics regardless of your display's refresh rate.
+
+## Three Theoretical Frameworks
+
+The engine is organized around three named frameworks, each responsible for a distinct layer of the game.
+
+<Callout type="info" title="LambertLiuTheory — Mathematics">
+  Governs all geometry and dimensionality: container dimensions and aspect ratio, ball radii for each tier, tier counts, and the proportional scaling system that keeps the game pixel-perfect at any window size.
+</Callout>
+
+<Callout type="info" title="JaneFlyThought — Physics">
+  Governs all dynamics: collision impulses (normal and tangential), torque generation, gravity integration, rotational velocity and damping, wall friction, and the spatial hash grid used for O(n) neighbor lookup.
+</Callout>
+
+<Callout type="info" title="BurningIsm — Art">
+  Governs all audiovisual presentation: background images and gradient overlays, per-tier merge sound effects, 1024×1024 ball sprites, visual celebration effects, and the victory music that plays when you fuse the ultimate ball.
+</Callout>
+
+## Simulation Loop
+
+Each call to `game.update(dt)` executes the following steps in order. Understanding this sequence helps you predict how balls will behave — for example, why game-over is checked *before* gravity runs, or why wall clamping happens *after* each collision pass.
+
+<Steps>
+  <Step title="Clamp dt">
+    `dt` is clamped to a maximum of `0.05 s` (equivalent to a 20 FPS floor). This protects the simulation against frame spikes — if the window is minimized or the system lags, physics won't explode when the next frame arrives.
+  </Step>
+  <Step title="Tick timers">
+    The merge cooldown timer and spawn-protect timers advance by `dt`. Newly dropped balls are immune to game-over detection for 0.20 s; freshly merged balls are protected for 0.35 s.
+  </Step>
+  <Step title="Game-over check">
+    The engine checks whether any ball has been above the overflow line long enough to trigger game over. Crucially, this check runs *before* gravity is applied, and it uses a position-delta threshold (< 3 px/frame) rather than raw velocity — a ball must be both high *and* settled to end the game.
+  </Step>
+  <Step title="Gravity + position integration">
+    Each non-sleeping ball receives a downward velocity increment of `GRAVITY × dt`, then its position is updated by `v × dt`. The environment is a perfect vacuum — there is no air resistance or terminal velocity.
+  </Step>
+  <Step title="Spatial hash grid rebuild">
+    The grid is cleared and every active ball is re-inserted. The cell size equals the diameter of the largest ball, so any potentially-colliding pair is guaranteed to land in the same or adjacent cells.
+  </Step>
+  <Step title="Magnetic attraction">
+    Same-tier balls within `ATTRACT_RANGE` px of each other receive a small acceleration toward one another. **This step only runs in Full mode and Full Debug mode** — Lite, Debug, Demo, and Q Self use pure collision-based merging.
+  </Step>
+  <Step title="Wall clamp">
+    Each ball is pushed back inside the container if it has crossed a wall. Walls are rigid: the velocity component perpendicular to the wall is zeroed on contact, with no rebound.
+  </Step>
+  <Step title="Collision resolution × 4 passes">
+    The engine iterates 4 times over all candidate pairs from the spatial grid. Each pass calls `resolve_collision()`, which separates overlapping balls, exchanges velocity along the contact normal (scaled by mass ratio), applies Coulomb friction along the tangent, and generates rotational torque. A 20% over-correction ensures overlaps are fully cleared. The wall clamp runs again after every pass to prevent balls from being pushed through the container wall by collision pressure.
+  </Step>
+  <Step title="Merge check">
+    `circles_near()` scans for same-tier ball pairs within `radius_sum + 3 px`. Any pair that qualifies and is not on cooldown is scheduled for fusion.
+  </Step>
+  <Step title="Sleep mechanism">
+    Any ball whose speed has stayed below 2 px/frame for 0.3 s continuously enters deep sleep. Sleeping balls are skipped during collision detection, dramatically reducing CPU load on a settled board. A collision from any neighboring ball immediately wakes a sleeper.
+  </Step>
+  <Step title="Dead item cleanup">
+    Balls that were consumed by a merge (marked `dead`) are removed from the active list.
+  </Step>
+</Steps>
+
+## Scaling System
+
+All physics values in the source code are specified at a **reference resolution of 600 × 900 px**. When you resize the window, the engine recomputes the scale factor:
+
+```
+scale = min(window_width / 600, window_height / 900)
+```
+
+Every position, radius, velocity, force, and distance is then passed through:
+
+```
+s(v) = v × scale
+```
+
+This means the game behaves identically whether you play in a 720 × 1020 window, maximized on a 1080p monitor, or full-screen on a tablet. The physics feel doesn't change — only the pixel count does.
+
+## Key Parameters
+
+| Parameter | Value | Notes |
+|---|---|---|
+| FPS | 480 | vsync enabled (v2.3+) |
+| Collision passes | 4 | per frame |
+| Merge cooldown | 0.25 s | after each merge event |
+| Merge tolerance | 3.0 px | `circles_near` distance beyond radius sum |
+| Sleep velocity | 2.0 px/frame | threshold to enter deep sleep |
+| Sleep settle time | 0.3 s | time below threshold before sleeping |
+| Environment | Vacuum | no air resistance |
+
+## Related Pages
+
+<CardGroup cols={3}>
+  <Card title="JFT2 Parameters" icon="flask" href="/reference/jft2-parameters">
+    Full reference for gravity, damping, friction, mass, and wall behavior in the JaneFlyThought2 model.
+  </Card>
+  <Card title="Rotation Physics" icon="arrows-spin" href="/reference/rotation-physics">
+    How collision torque, angular damping, and wall friction drive ball spin.
+  </Card>
+  <Card title="Dynamic Drop" icon="layer-group" href="/reference/dynamic-drop">
+    How Full mode unlocks higher-tier balls as you progress through the fusion chain.
+  </Card>
+</CardGroup>

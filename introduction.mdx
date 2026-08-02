@@ -1,0 +1,64 @@
+---
+title: "Big Alloy Merge: Suika Physics Game Overview"
+sidebarTitle: "Introduction"
+description: "Learn what Big Alloy Merge is, how it plays, and what makes it unique — a 17-element fusion chain, 480 FPS engine, and six distinct game modes."
+---
+
+Big Alloy Merge (合成大YK) is a Suika-style physics merge game inspired by the classic Daxigua (大西瓜) browser game. You drop elemental balls into a container, watch them collide and settle under gravity, and fuse matching pairs into progressively larger elements. The chain runs 17 tiers deep — from the tiny 西西 🕴️ all the way to the legendary 钇钾 🪙 — and the rotational physics engine makes every drop feel uniquely alive. The game is produced by Trash Panda Q Opal and runs natively on Windows and Linux.
+
+## What Makes It Unique
+
+Big Alloy Merge builds on the familiar merge-game formula and extends it in several meaningful ways.
+
+<Accordion title="17-Element Fusion Chain">
+  Most Suika-style games top out at 11 or 12 elements. Big Alloy Merge's Full mode stretches the chain to 17 tiers, from 西西 (tier 0, radius 18) up to 钇钾 (tier 16, radius 166). Each element has its own name, emoji, sprite image, merge sound effect, and a custom merge message that fires when the fusion completes.
+</Accordion>
+
+<Accordion title="480 FPS Physics Engine">
+  The v2.3.0.0 "长风破浪版" update doubled the frame rate from 120 to 480 FPS with vsync enabled across all windows. The higher tick rate means collision resolution and merge detection are far more precise — balls behave smoothly even at the bottom of a dense stack. The engine runs four collision-resolution passes per frame and uses a spatial hash grid to keep performance flat regardless of ball count.
+</Accordion>
+
+<Accordion title="Rotational Physics (JaneFlyThought2)">
+  Big Alloy Merge uses a custom rotational physics model called JaneFlyThought2 (JFT2). Every ball carries an angular velocity. Collisions apply torque proportional to the impact vector, wall contacts apply rotational friction, and angular velocity decays over time via a damping coefficient. The result is that balls visibly spin when they bounce — a subtle but satisfying detail absent from most merge games.
+</Accordion>
+
+<Accordion title="Six Game Modes">
+  The mode selection screen offers six distinct experiences: **Lite** (12-element classic, recommended for newcomers), **Full** (17-element chain with dynamic drop unlocks), **Debug** (Lite with a live parameter sidebar, password `3919`), **Full Debug** (Full with a real-time physics panel), **Demo** (AI-controlled showcase with SmartBot / DumbBot / DemoBot), and **Q Self** (fully customisable element names, images, and merge messages loaded from `q_custom.json`).
+</Accordion>
+
+<Accordion title="Dynamic Drop System (Full Mode)">
+  In Full mode, the set of balls that can appear as drops expands as you progress. When you fuse a tier-N element, tier N−2 becomes eligible to drop, subject to a rate limit that keeps the pacing fair. This means early game feels tight and controlled while late game opens up with more variety.
+</Accordion>
+
+<Accordion title="AI Demo Mode">
+  Press **D** on the mode selection screen to watch the game play itself. Three AI agents are available — SmartBot plays to maximise score, DumbBot drops randomly, and DemoBot follows a scripted showcase sequence. An on-screen overlay shows the bot's target position and aim line in real time.
+</Accordion>
+
+<Accordion title="Q Self Custom Mode">
+  Q Self mode lets you replace every element's name, image, and merge message with your own content. Drop a `q_custom.json` file into the game directory, enter Q Self mode, and the game loads your customisations automatically. The built-in `image_processor.py` normalises any image to the required 1024×1024 RGBA PNG format.
+</Accordion>
+
+## Core Gameplay Loop
+
+The rules are simple to learn and hard to master. A preview ball appears above the container, following your mouse. Release inside the container to drop it. Two balls of the same tier that touch will automatically fuse into the next tier, playing a merge sound and displaying a floating merge message. The new ball may immediately touch another ball of its tier, triggering a chain reaction. If the ball stack rises above the red overflow line and stays there for three seconds, the game ends. Fuse all the way to 钇钾 🪙 to trigger the victory animation and hear L'Internationale play.
+
+## Where to Go Next
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Drop your first ball and understand the core loop in five minutes.
+  </Card>
+  <Card title="Game Modes" icon="gamepad" href="/modes/overview">
+    Compare all six modes and find the one that suits your playstyle.
+  </Card>
+  <Card title="Elements" icon="flask" href="/elements/overview">
+    Explore every element in the 17-tier fusion chain.
+  </Card>
+  <Card title="Physics Engine" icon="atom" href="/reference/physics-overview">
+    Dive into the JaneFlyThought2 engine parameters and collision model.
+  </Card>
+</CardGroup>
+
+## Dedication
+
+Big Alloy Merge was created in 2026 by Trash Panda Q Opal and is dedicated to the **Junior High Class of 2026, Class F15** of Northwestern Polytechnical University Affiliated Middle School. The element names, merge messages, and class in-jokes woven throughout the game are a permanent record of that time. Thank you to YWL for the artwork, GJS and SJY for game logic planning, DSR for improvement suggestions, LYM for tireless playtesting, and LBC for the useful tools. 长风破浪，会有时。

@@ -1,0 +1,79 @@
+---
+title: "JaneFlyThought2 Physics Parameters Reference"
+sidebarTitle: "JFT2 Parameters"
+description: "Complete reference for the JaneFlyThought2 (JFT2) physics model used in Big Alloy Merge — gravity, damping, friction, mass system, wall behavior, and collision resolution."
+---
+
+JaneFlyThought2 (JFT2) is the default physics model for every game mode in Big Alloy Merge. It replaces the original Daxigua-replica model (JFT1) with doubled gravity, fully inelastic collisions, and a mass-proportional impulse system that makes heavy balls anchor the pile while lighter ones bounce away. You do not need to configure anything to use JFT2 — it activates automatically when you start Lite, Full, Debug, Full Debug, or Q Self mode.
+
+## Force Parameters
+
+| Parameter | Value | Description |
+|---|---|---|
+| `JFT2_GRAVITY` | 1800 px/s² | World gravity — 2× the original Daxigua reference value |
+| `JFT2_DAMPING` | 0.0 | Fully inelastic collisions; zero restitution along the contact normal |
+| `JFT2_FRICTION` | 0.95 | Ball-to-ball Coulomb friction coefficient applied along the contact tangent |
+| `JFT2_DROP_DELAY` | 0.25 s | Cooldown before you can drop the next ball |
+| `JFT2_INITIAL_VY` | 1600 px/s | Downward velocity applied to a ball the moment it is released |
+| `JFT2_OVERFLOW_TIME` | 3.0 s | Time a settled ball must remain above the overflow line before game over triggers |
+
+## Wall Behavior
+
+JFT2 uses rigid walls — there is no rebound when a ball contacts the container boundary.
+
+- **Perpendicular velocity** is zeroed immediately on wall contact. A ball falling into the floor stops its downward motion; a ball drifting into a side wall stops its horizontal motion.
+- **Wall friction coefficient** is 0.3. Horizontal velocity is additionally dampened by ×0.88 on floor contact, giving the slight braking feel you notice when a ball settles on the bottom.
+- **Restitution** is 0.0. No kinetic energy is returned from wall collisions under any circumstances.
+
+## Mass System
+
+JFT2 introduces a linear mass model that prevents the smallest balls from being unrealistically light.
+
+**Mass definition:**
+```
+mass = radius × 10
+```
+
+Because mass scales linearly with radius (not with area), a tier-0 ball at radius 18 has `mass = 180`, while a tier-10 ball at radius 144 has `mass = 1440` — an 8× difference rather than the 64× difference you'd get from an area-based model.
+
+**Position correction ratio:**
+```
+ratio = m_other / (m1 + m2)
+```
+The lighter ball is displaced more during overlap resolution. If you drop a tiny ball onto a large resting ball, the small one bounces away while the large one barely moves.
+
+**Normal impulse:**
+```
+impulse = rel_vn × (1 + DAMPING) × m_other / (m1 + m2)
+```
+With `DAMPING = 0.0`, this simplifies to `rel_vn × m_other / (m1 + m2)`.
+
+**Tangential (friction) impulse:**
+The friction impulse is Coulomb-clamped to `min(|normal_impulse| × FRICTION, rel_vt)`. This ensures friction never reverses the tangential relative velocity — it can only slow sliding, never spin it backward.
+
+## Mass Ratio Examples
+
+The table below shows how the position-correction ratio changes for a few representative pairings in Lite mode. A ratio below 0.5 means the lighter ball moves more than half the total separation distance.
+
+| Small Ball | Large Ball | Mass Ratio (light / heavy) |
+|---|---|---|
+| 家畜 r=18 | 疯狗 r=42 | 0.429 |
+| 猴子 r=28 | 阳阳 r=54 | 0.519 |
+| 考拉 r=38 | 马恕 r=64 | 0.594 |
+
+## Comparison with JFT1
+
+JFT1 is the legacy Daxigua-replica model. The table below shows the key differences so you can understand exactly what changed when JFT2 became the default.
+
+| Property | JFT1 (Daxigua replica) | JFT2 (current default) |
+|---|---|---|
+| Gravity | 900 px/s² | 1800 px/s² |
+| Damping (restitution) | 0.1 | 0.0 |
+| Drop delay | 0.5 s | 0.25 s |
+| Initial drop velocity | 800 px/s | 1600 px/s |
+| Wall restitution | 0.1 (10% bounce) | 0.0 (rigid) |
+| Mass model | Radius-ratio approximation | `mass = radius × 10` |
+
+<Info>
+  JFT1 is available as a legacy physics model for reference and comparison. You can activate it programmatically via `Game(mode="lite", physics_model="jft1")`. It is not exposed in the standard mode-select UI.
+</Info>

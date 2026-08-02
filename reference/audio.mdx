@@ -1,0 +1,48 @@
+---
+title: "Sound Effects and Background Music in Big Alloy Merge"
+sidebarTitle: "Audio"
+description: "Big Alloy Merge plays unique sound effects for each of the 16 merge tiers, plus background music that changes as you progress toward the legendary 钇钾 victory."
+---
+
+Big Alloy Merge uses a layered audio system: a looping background track plays throughout your session and shifts as you reach key merge milestones, while each tier of ball has its own independent sound effect for merges and drops. When you finally create 钇钾, the game marks the moment with L'Internationale and full-screen victory effects.
+
+## Background Music
+
+When the game launches, background music begins looping automatically. As you merge your way up the tier chain, the music changes to reflect your progress:
+
+| Merge Tier Reached | Music Change |
+|--------------------|--------------|
+| Tier 10 | Victory variation begins |
+| Tier 13 or Tier 15 | Impossible variation |
+| Tier 16 (钇钾 🪙) | L'Internationale + victory special effects |
+
+The music transition is triggered the first time you create a ball of that tier in a session. Reaching 钇钾 plays L'Internationale and triggers the full-screen celebration sequence — the game does not pause, so you can keep playing.
+
+## Merge Sound Effects
+
+Every tier in the game has its own merge sound. There are **16 unique sounds** for tiers 0 through 15, each playing the moment two same-tier balls combine. Merging 钇钾 (tier 16) doesn't play a regular merge sound — it triggers the victory music system instead.
+
+## Drop Sounds
+
+Dropping a ball also produces a sound. The drop sound corresponds to the tier of the ball you dropped, so the audio feedback changes as the dynamic drop system unlocks higher-tier balls in Full mode.
+
+## Muting and Volume
+
+To mute all audio, click the **🔊/🔇 button** in the top button bar during gameplay, or click the sound icon on the mode select screen. Muting silences both the background music and all sound effects at once.
+
+For individual volume control, open **Settings** (⚙ gear icon on the mode select screen) and adjust the music volume and effects volume sliders independently. All sound settings are saved immediately when changed.
+
+<Note>
+  Sound is enabled by default on first launch. Your mute state and volume levels persist between sessions.
+</Note>
+
+## Audio File Locations
+
+If you're running Big Alloy Merge from source and need to find or replace audio files:
+
+- **Merge sound effects** — `music/` directory, organized by tier number
+- **Victory music** — `assets/victory.mp3`
+
+<Tip>
+  On Linux, ensure your system audio daemon (PulseAudio or PipeWire) is running and your system mixer is not muted before launching the game. If you hear no sound at all on Linux, check your audio daemon status first before looking at in-game settings.
+</Tip>

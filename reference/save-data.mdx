@@ -1,0 +1,85 @@
+---
+title: "Save Data and High Score Files in Big Alloy Merge"
+sidebarTitle: "Save Data"
+description: "Big Alloy Merge stores your save game, high scores, and settings in AppData. Learn the file locations, what each file contains, and how to back up or reset your data."
+---
+
+Big Alloy Merge automatically preserves your progress between sessions. Since v2.3.0.0, all save data lives in your Windows AppData folder rather than the game installation directory — meaning the game never needs administrator rights to write files, and your saves survive reinstallation cleanly.
+
+## Save Data Location
+
+Starting with v2.3.0.0, all user data is stored at:
+
+```
+%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\
+```
+
+To open this folder directly, press **Win+R** and paste:
+
+```
+%APPDATA%\Trash Panda Q Opal\Big Alloy Merge
+```
+
+Then press **Enter**. Windows Explorer will open at the correct location.
+
+<Note>
+  Older versions of Big Alloy Merge stored save data in the game installation directory. Starting with v2.3.0.0, the game migrated to AppData for compatibility with non-administrator Windows accounts.
+</Note>
+
+## Files in the Save Folder
+
+| File | Contents |
+|------|----------|
+| `savegame.json` | Current game state — ball positions, velocities, score, active mode, and music playback position |
+| `highscore.txt` | Up to 20 score entries; the first line is your all-time best |
+| `modes.json` | All custom mode definitions and their settings |
+
+## What savegame.json Stores
+
+When you save, the game records everything needed to resume exactly where you left off:
+
+- All ball positions and velocities at the moment of saving
+- The current score
+- The active game mode
+- Drop cooldown state (so the timing feels seamless on resume)
+- Music playback position (the background track picks up from the same point)
+
+## Auto-Save Behavior
+
+You never need to manually trigger a save. Big Alloy Merge saves your game automatically in two situations:
+
+- **When you exit the game** — pressing ESC, clicking ❌, or closing the window
+- **When you return to the mode select screen** — clicking the 🏠 menu button
+
+Each game mode saves independently, so switching from Full mode to Lite mode (and back) preserves both sessions separately.
+
+## Restoring a Save
+
+When you return to the mode select screen, the game checks for existing saves. If one exists for a mode, you'll see a **📂 Restore Save** card at the top of the mode list.
+
+To restore:
+- Press **R** to quickly load the most recent save, or
+- Click the **📂 Restore Save** card directly
+
+Once you restore a save, you'll resume with the same balls, score, and music position from where you left off. The save file is automatically deleted after a successful restore.
+
+## Backing Up Your Progress
+
+To back up all your saves, high scores, and custom modes at once, copy the entire folder:
+
+```
+%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\
+```
+
+Paste the copy to any safe location — a USB drive, cloud folder, or another directory. To restore a backup, simply replace the folder contents with your saved copy.
+
+## Resetting Your Data
+
+You can delete individual files to reset specific parts of your data:
+
+- **Delete `savegame.json`** — clears the current in-progress game (the game will start fresh on next launch)
+- **Delete `highscore.txt`** — resets all recorded high scores (the game recreates the file automatically)
+
+<Warning>
+  Deleting `modes.json` permanently removes all custom modes you have created. There is no undo. Back up this file before deleting it if you want to preserve your custom configurations.
+</Warning>
