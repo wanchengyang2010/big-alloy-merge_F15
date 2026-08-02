@@ -28,26 +28,23 @@ When you launch Q Self mode (press **Q** from the mode select screen), the game 
     - Recommended: use images with the subject roughly centered so the auto-crop keeps the important part of the picture.
   </Step>
 
-  <Step title="Create q_custom.json in the game directory">
-    Create a file named `q_custom.json` in the same folder as `main.py` (Python source) or in `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\` (installed version on Windows). The file must contain a JSON object with a single `"elements"` array of exactly 12 objects, ordered from tier 0 to tier 11.
+  <Step title="Create q_custom.json in your AppData folder">
+    Create a file named `q_custom.json` in `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\` (Windows) or `~/.local/share/TrashPandaQOpal/BigAlloyMerge/` (Linux). The file must contain a JSON object with a single `"tiers"` array of exactly 12 objects, ordered from tier 0 (smallest) to tier 11 (ultimate).
 
     ```json
     {
-      "elements": [
+      "tiers": [
         {
-          "tier": 0,
           "name": "Your Name",
           "image": "path/to/image0.jpg",
           "message": "Your merge message!"
         },
         {
-          "tier": 1,
           "name": "Another Name",
           "image": "path/to/image1.png",
           "message": "Another merge message!"
         },
         {
-          "tier": 2,
           "name": "Third Name",
           "image": "path/to/image2.jpg",
           "message": ""
@@ -60,12 +57,12 @@ When you launch Q Self mode (press **Q** from the mode select screen), the game 
 
     | Field | Required | Description |
     |-------|----------|-------------|
-    | `tier` | Yes | Integer 0–11, identifying the element's position in the merge chain |
     | `name` | Yes | Display name shown on the drop preview and merge popup |
     | `image` | Yes | Path to the source image file (absolute or relative to the game directory) |
     | `message` | No | Text shown when two balls of this tier merge; leave `""` for no message |
+    | `points` | No | Score awarded on merge; omit to inherit the default Lite value for that tier |
 
-    Provide all 12 entries (tiers 0 through 11). Missing tiers fall back to the default Lite element for that position.
+    The array is positional — the first object is tier 0, the second is tier 1, and so on. There is no `"tier"` field. Provide all 12 entries; any missing entries fall back to the default Lite element for that position.
   </Step>
 
   <Step title="Launch the game and press Q">
@@ -96,7 +93,6 @@ If you'd rather not edit `q_custom.json` by hand, you can configure Q Self mode 
 3. Switch to the **Art** tab in the right panel.
 4. Click any tier row and then click the **Image** field to open a file browser and pick your image — the processor runs automatically.
 5. Click the **Message** field to type a custom merge message for that tier.
-6. Click the **Name** field (Math tab) to rename the element.
 
 Changes made through the Settings UI are saved immediately to `modes.json` in your AppData folder and take effect the next time you start a round.
 

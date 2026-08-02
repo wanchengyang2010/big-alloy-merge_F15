@@ -59,21 +59,42 @@ If you supply a non-compliant image, the game may display it stretched, clipped,
 
 ## Converting Images with image_processor.py
 
-The included `image_processor.py` script accepts any readable image file and outputs a compliant 1024×1024 RGBA PNG. It scales the source to fit the longer edge, center-crops to a square, and preserves existing transparency.
+The included `image_processor.py` module accepts any readable image file and outputs a compliant 1024×1024 RGBA PNG. It scales the source to fit the longer edge, center-crops to a square, and preserves existing transparency. The module has no standalone command-line interface — the easiest way to invoke it is through the in-game Settings UI, which runs the same pipeline automatically when you browse for a replacement image on any tier row.
 
-```bash
-python image_processor.py input.jpg assets/images/5.png
+If you want to call it from a script, import the `process_ball_image` function directly:
+
+```python
+import pygame
+import image_processor
+
+pygame.init()
+# source_path: your input image
+# mode_id: used as a subdirectory name for the output (e.g. "lite")
+# tier_index: the tier number (0–16) used to name the output file (e.g. tier_5.png)
+# target_dir: directory where the processed PNG is saved
+result = image_processor.process_ball_image(
+    source_path="input.jpg",
+    mode_id="lite",
+    tier_index=5,
+    target_dir="assets/images"
+)
+if result:
+    print(f"Saved: {result}")   # e.g. "tier_5.png"
 ```
 
-Replace `input.jpg` with your source file path and `assets/images/5.png` with the target tier file you want to overwrite. The script uses pure pygame-ce — no additional dependencies required beyond what the game already needs.
+The function returns the output filename on success (`"tier_5.png"` in this example) or `None` on failure. It uses pure pygame-ce — no additional dependencies required beyond what the game already needs.
+
+<Note>
+  `process_ball_image` names the output file `tier_{index}.png` — for example `tier_5.png`. After processing, rename or copy the result to the correct numbered filename (`5.png`) in `assets/images/` so the game can find it.
+</Note>
 
 **What the processor does:**
 
 1. Loads the source image (any pygame-ce–supported format)
 2. Converts to RGBA
 3. Scales so the longer dimension equals 1024 px, preserving aspect ratio
-4. Center-crops to a 1024×1024 square (padding with transparent pixels for portrait/landscape images that don't fill the square after scaling)
-5. Saves the result as a PNG to the output path you specify
+4. Center-crops to a 1024×1024 square (padding with transparent pixels where the scaled image does not fill the canvas)
+5. Saves the result as a PNG to the output directory you specify
 
 <Tip>
   Always keep a backup copy of the original numbered PNG files before replacing them. Copy the entire `assets/images/` folder somewhere safe — restoring a single file later is much faster than reinstalling the game.

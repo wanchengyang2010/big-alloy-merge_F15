@@ -1,7 +1,7 @@
 ---
-title: "Physics Engine Overview: How Big Alloy Merge Simulates Physics"
+title: "Physics Engine Overview: Big Alloy Merge Simulation"
 sidebarTitle: "Physics Overview"
-description: "Big Alloy Merge runs a custom 480 FPS physics engine. Learn about the simulation loop, scaling system, collision passes, sleep mechanics, and the three theoretical frameworks."
+description: "Big Alloy Merge runs a custom 480 FPS physics engine with collision passes, sleep mechanics, and proportional scaling — learn how every frame works."
 ---
 
 Big Alloy Merge runs a fully custom physics engine built in Python with pygame-ce. Every frame, the engine integrates gravity, resolves collisions across multiple passes, checks for merges, and manages a sleep system to keep idle balls quiet. The simulation runs at 480 FPS with vsync enabled (v2.3+), giving you smooth, tear-free motion and highly responsive drop physics regardless of your display's refresh rate.
@@ -24,7 +24,7 @@ The engine is organized around three named frameworks, each responsible for a di
 
 ## Simulation Loop
 
-Each call to `game.update(dt)` executes the following steps in order. Understanding this sequence helps you predict how balls will behave — for example, why game-over is checked *before* gravity runs, or why wall clamping happens *after* each collision pass.
+Each physics frame executes the following steps in order. Understanding this sequence helps you predict how balls will behave — for example, why game-over is checked *before* gravity runs, or why wall clamping happens *after* each collision pass.
 
 <Steps>
   <Step title="Clamp dt">
@@ -49,10 +49,10 @@ Each call to `game.update(dt)` executes the following steps in order. Understand
     Each ball is pushed back inside the container if it has crossed a wall. Walls are rigid: the velocity component perpendicular to the wall is zeroed on contact, with no rebound.
   </Step>
   <Step title="Collision resolution × 4 passes">
-    The engine iterates 4 times over all candidate pairs from the spatial grid. Each pass calls `resolve_collision()`, which separates overlapping balls, exchanges velocity along the contact normal (scaled by mass ratio), applies Coulomb friction along the tangent, and generates rotational torque. A 20% over-correction ensures overlaps are fully cleared. The wall clamp runs again after every pass to prevent balls from being pushed through the container wall by collision pressure.
+    The engine iterates 4 times over all candidate pairs from the spatial grid. Each pass separates overlapping balls, exchanges velocity along the contact normal (scaled by mass ratio), applies Coulomb friction along the tangent, and generates rotational torque. A 20% over-correction ensures overlaps are fully cleared. The wall clamp runs again after every pass to prevent balls from being pushed through the container wall by collision pressure.
   </Step>
   <Step title="Merge check">
-    `circles_near()` scans for same-tier ball pairs within `radius_sum + 3 px`. Any pair that qualifies and is not on cooldown is scheduled for fusion.
+    The merge detector scans for same-tier ball pairs within `radius_sum + 3 px`. Any pair that qualifies and is not on cooldown is scheduled for fusion.
   </Step>
   <Step title="Sleep mechanism">
     Any ball whose speed has stayed below 2 px/frame for 0.3 s continuously enters deep sleep. Sleeping balls are skipped during collision detection, dramatically reducing CPU load on a settled board. A collision from any neighboring ball immediately wakes a sleeper.
@@ -66,13 +66,13 @@ Each call to `game.update(dt)` executes the following steps in order. Understand
 
 All physics values in the source code are specified at a **reference resolution of 600 × 900 px**. When you resize the window, the engine recomputes the scale factor:
 
-```
+```text
 scale = min(window_width / 600, window_height / 900)
 ```
 
 Every position, radius, velocity, force, and distance is then passed through:
 
-```
+```text
 s(v) = v × scale
 ```
 
@@ -85,7 +85,7 @@ This means the game behaves identically whether you play in a 720 × 1020 window
 | FPS | 480 | vsync enabled (v2.3+) |
 | Collision passes | 4 | per frame |
 | Merge cooldown | 0.25 s | after each merge event |
-| Merge tolerance | 3.0 px | `circles_near` distance beyond radius sum |
+| Merge tolerance | 3.0 px | Distance beyond radius sum that still triggers a merge |
 | Sleep velocity | 2.0 px/frame | threshold to enter deep sleep |
 | Sleep settle time | 0.3 s | time below threshold before sleeping |
 | Environment | Vacuum | no air resistance |

@@ -1,5 +1,5 @@
 ---
-title: "Big Alloy Merge Version History and Changelog"
+title: "Big Alloy Merge Full Version History and Changelog"
 sidebarTitle: "Changelog"
 description: "Release notes for every version of Big Alloy Merge — from the initial v0.4.0.0 prototype to the current v2.3.0.0 长风破浪版 release."
 ---
@@ -30,22 +30,19 @@ Big Alloy Merge has grown from a core gameplay prototype into a full-featured ph
     - NSIS installer includes all assets, Python source, and optional debug password pre-authorization
     - Save data migrated from the installation directory to `%APPDATA%\Trash Panda Q Opal\Big Alloy Merge\` — no administrator rights required
 
-    **Bug fix:** resolved an `AttributeError` crash caused by `_dynamic_drop` being accessed before initialization.
+    **Bug fix:** resolved an `AttributeError` crash caused by the dynamic drop state being accessed before initialization.
   </Accordion>
 
   <Accordion title="v2.2.x (2026-06-16 to 2026-06-18)">
     **v2.2.2.5 (2026-06-18) — Critical bug fix release**
-    - Fixed a `_check_merges` infinite loop that caused the game to freeze immediately on launch (a misplaced `break` in the while loop)
-    - Instant merge fully enabled: `circles_near()` with 3 px tolerance correctly integrated into `_check_merges`
+    - Fixed an infinite loop in the merge-check routine that caused the game to freeze immediately on launch (a misplaced `break` in the while loop)
+    - Instant merge fully enabled: 3 px tolerance merge detection correctly integrated into the merge-check routine
     - GitHub update notification now runs in a background thread with thread-safe rendering
     - Added `A` key shortcut to enter Full mode
     - `COLLISION_PASSES` reduced from 10 to 4 (60% fewer collision iterations per frame)
 
-    **v2.2.2.4 (2026-06-16) — Deprecated (contained the merge freeze bug)**
-    - Wall friction reworked: proportional damping based on normal force, no hard velocity stop
-    - Instant merge system introduced (`circles_near()` function)
-    - Full mode container width adjusted: 550 → 540
-    - GitHub Releases update check added (background HTTP thread)
+    **v2.2.2.4 (2026-06-16) — Broken release, superseded by v2.2.2.5**
+    This version contained a critical infinite loop in the merge-check routine that caused the game to freeze immediately on launch. It was superseded by v2.2.2.5 the same day. Do not use this version.
 
     **v2.2.2.3 (2026-06-16)**
     - NSIS installer with MUI2 modern wizard UI
@@ -60,7 +57,7 @@ Big Alloy Merge has grown from a core gameplay prototype into a full-featured ph
 
     **v2.0.4.0 (2026-06-13)**
     - Full mode (17 elements) unlocked
-    - Full Debug mode introduced with a real-time parameter panel (`debug_panel.py`)
+    - Full Debug mode introduced with a real-time parameter panel
     - Panel has three tabs: Math Model, Physics Engine, and Art Framework — all parameters adjustable live
 
     **v2.0.1.0 (2026-06-12)**

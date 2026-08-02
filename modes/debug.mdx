@@ -1,7 +1,7 @@
 ---
 title: "Debug and Full Debug Mode: Tweak Physics in Real Time"
 sidebarTitle: "Debug Mode"
-description: "Debug modes in Big Alloy Merge let you adjust gravity, friction, drop weights, and container size in real time using the in-game parameter panel. Password: 3919."
+description: "Debug and Full Debug modes let you tweak physics, drop weights, and container settings in real time. Password 3919 required. Scores are never saved."
 ---
 
 Debug mode and Full Debug mode give you direct access to the physics and configuration layer that underlies every game of Big Alloy Merge. You can change gravity, friction, container dimensions, drop probability weights, and even per-ball properties — all while the game is running, with every change taking effect immediately. These modes exist so you can experiment freely, but to keep the leaderboard fair, scores are never recorded when debug tools are in use.
@@ -72,9 +72,9 @@ Each of the 17 tiers has its own independent parameter set:
 
 **Apply to all balls** — click the **全** button next to any per-ball parameter to push that value to all 17 tiers at once, saving you from editing each row individually.
 
-<Important>
+<Warning>
   Scores are **never recorded** in either debug mode. The game sets an internal `debug_tainted` flag the moment you open a debug session, and that flag persists for the rest of the run. Restarting the game from scratch (back to the mode select screen) clears the flag.
-</Important>
+</Warning>
 
 ## Toggling the Panel
 

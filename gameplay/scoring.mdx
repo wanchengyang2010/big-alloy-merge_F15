@@ -20,7 +20,7 @@ Your scores are written to **`highscore.txt`** automatically at the end of each 
 
 On Windows, your high-score file lives inside your user profile's AppData folder:
 
-```
+```text
 %APPDATA%\Trash Panda Q Opal\Big Alloy Merge\highscore.txt
 ```
 
@@ -34,18 +34,18 @@ Not every mode saves your score. The table below shows exactly which modes contr
 |------|-----------------|
 | Lite | ✅ Yes |
 | Full | ✅ Yes |
-| Debug | ❌ No (`debug_tainted`) |
+| Debug | ❌ No |
 | Full Debug | ❌ No |
 | Demo | ❌ No |
 | Q Self | ✅ Yes |
 
 <Warning>
-  Entering Debug mode or Full Debug mode sets an internal `debug_tainted` flag for that session. Even if you do not change any parameters, your score will **not** be saved to `highscore.txt`. Switch back to Lite, Full, or Q Self mode and start a fresh game if you want your score to count.
+  Entering Debug mode or Full Debug mode marks the entire session as unscored. Even if you do not change any parameters, your score will **not** be saved to `highscore.txt`. Switch back to Lite, Full, or Q Self mode and start a fresh game if you want your score to count.
 </Warning>
 
 ## Game Over Screen
 
-When the game ends, you see your **current session score** alongside the **last 5 history entries** from your `highscore.txt`. This gives you instant context on how your run compares to your recent form. To jump straight back into the action, **click anywhere inside the container** area — no need to navigate back to the mode-select screen.
+When the game ends, you see your **current session score** alongside your **top 5 all-time scores** from `highscore.txt` — the file is always sorted highest-first, so those five entries represent your personal best runs. To jump straight back into the action, **click anywhere on the game screen** — no need to navigate back to the mode-select screen.
 
 ## Maximising Your Score
 
